@@ -1,13 +1,29 @@
+/* Import Google Fonts for Warren typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Warren Brand Design System */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand Colors */
+  --warren-primary-dark-blue: #032E46;
+  --warren-secondary-green: #6EAD7C;
+  --warren-off-white: #F8F7F4;
+  --warren-page-background: #F6F4ED;
+  --warren-light-gray: #D9D9D9;
+  --warren-light-blue: #DAEDF0;
+  --warren-primary-text: #333333;
+  --warren-secondary-text: #6C757D;
+  --warren-placeholder-text: #999999;
+  --warren-border: #CED4DA;
+  --warren-header-blue-gray: #DDE2E7;
+  
+  /* Legacy variables for compatibility */
+  --background: var(--warren-page-background);
+  --foreground: var(--warren-primary-text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Typography fallback since we don't have access to Acumin Pro and Lust Display */
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 html,
@@ -17,8 +33,151 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: #333333 !important;
+  background: #F6F4ED !important;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Warren Typography Classes */
+.warren-hero-title {
+  font-size: 48px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  color: #032E46 !important;
+}
+
+.warren-section-header {
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  color: #032E46 !important;
+  margin-bottom: 1rem !important;
+}
+
+.warren-body-text {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: #333333 !important;
+  line-height: 1.6 !important;
+}
+
+.warren-secondary-text {
+  color: #6C757D !important;
+  font-size: 14px !important;
+}
+
+/* Warren Component Styles */
+.warren-btn-primary {
+  background-color: #032E46 !important;
+  color: white !important;
+  padding: 12px 28px !important;
+  border-radius: 7px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  text-align: center !important;
+}
+
+.warren-btn-primary:hover {
+  background-color: #024a6b !important;
+  transform: translateY(-1px) !important;
+}
+
+.warren-btn-secondary {
+  background-color: #EFEFF5 !important;
+  color: #333333 !important;
+  padding: 12px 28px !important;
+  border-radius: 7px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  text-align: center !important;
+}
+
+.warren-btn-secondary:hover {
+  background-color: #E5E5EB !important;
+  transform: translateY(-1px) !important;
+}
+
+.warren-card {
+  background: white !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+  border: 1.5px solid #e7e7ef !important;
+  padding: 1.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.warren-card-large {
+  background: white !important;
+  border-radius: 24px !important;
+  box-shadow: 0 6px 32px rgba(37,74,138,0.08) !important;
+  border: 1.5px solid #e7e7ef !important;
+  padding: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.warren-input {
+  background-color: #DAEDF0 !important;
+  border: 1px solid #CED4DA !important;
+  border-radius: 30px !important;
+  height: 54px !important;
+  padding: 12px 16px !important;
+  font-size: 16px !important;
+  width: 100% !important;
+  outline: none !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.warren-input:focus {
+  border-color: #032E46 !important;
+  box-shadow: 0 0 0 3px rgba(3, 46, 70, 0.1) !important;
+}
+
+.warren-textarea {
+  background-color: var(--warren-light-blue);
+  border: 1px solid var(--warren-border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 16px;
+  width: 100%;
+  outline: none;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.2s ease;
+}
+
+.warren-textarea:focus {
+  border-color: var(--warren-primary-dark-blue);
+  box-shadow: 0 0 0 3px rgba(3, 46, 70, 0.1);
+}
+
+.warren-sidebar {
+  background-color: var(--warren-light-gray);
+  width: 281px;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.warren-main-content {
+  background-color: #F8F7F4 !important;
+  min-height: 100vh !important;
+  padding: 2rem !important;
+}
+
+/* Warren Success State */
+.warren-success {
+  color: var(--warren-secondary-green);
+  background-color: rgba(110, 173, 124, 0.1);
+  border: 1px solid var(--warren-secondary-green);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
 }
 
 * {
@@ -46,5 +205,37 @@ a {
   }
   .imgDark {
     display: unset;
+  }
+}
+
+/* Typing indicator animation */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #999;
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
   }
 }

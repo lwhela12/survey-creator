@@ -121,11 +121,32 @@ const BuilderPage = () => {
   };
 
   return (
-    <div>
-      <SpreadsheetUpload onUpload={handleUpload} />
-      <button onClick={handleSave}>Save</button>
-      <button onClick={handleLoad}>Load</button>
-      <Flow initialNodes={nodes} initialEdges={edges} />
+    <div className="warren-main-content">
+      <div className="container mx-auto">
+        <div className="mb-6">
+          <h1 className="warren-hero-title mb-2">Burrow Builder</h1>
+          <p className="warren-body-text" style={{ color: 'var(--warren-secondary-text)' }}>
+            Create your conversational survey burrow by uploading a spreadsheet or building from scratch.
+          </p>
+        </div>
+
+        <div className="warren-card mb-6">
+          <SpreadsheetUpload onUpload={handleUpload} />
+        </div>
+
+        <div className="flex gap-4 mb-6">
+          <button onClick={handleSave} className="warren-btn-primary">
+            Save Burrow
+          </button>
+          <button onClick={handleLoad} className="warren-btn-secondary">
+            Load Burrow
+          </button>
+        </div>
+
+        <div className="warren-card-large">
+          <Flow initialNodes={nodes} initialEdges={edges} />
+        </div>
+      </div>
     </div>
   );
 };

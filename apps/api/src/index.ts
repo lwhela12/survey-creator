@@ -1,5 +1,5 @@
 
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
@@ -10,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Placeholder for user authentication
-const authenticate = (req, res, next) => {
+const authenticate = (req: Request, res: Response, next: NextFunction) => {
   // In a real application, you would implement proper authentication logic here
   console.log('User authenticated');
   next();
