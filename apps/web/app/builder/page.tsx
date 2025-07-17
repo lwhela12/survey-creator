@@ -9,17 +9,27 @@ const BuilderPage = () => {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
 
-  const handleUpload = (data) => {
-    const findKey = (obj, keyToFind) => {
-        const normalizedKeyToFind = keyToFind.toLowerCase().replace(/[_ ]/g, "");
-        for (const key in obj) {
-            if (key.toLowerCase().replace(/[_ ]/g, "") === normalizedKeyToFind) {
-                return key;
-            }
-        }
-        return undefined;
-    }
+  const COLUMN_ALIASES = {
+    ID: ['id', 'block #', 'block', 'block number'],
+    Message_Text: ['message_text', 'question/content', 'question', 'content'],
+    Next_ID: ['next_id', 'logic/branching', 'next question'],
+  } as const;
 
+  const findKey = (row: Record<string, unknown>, key: keyof typeof COLUMN_ALIASES) => {
+    const normalized = key.toLowerCase().replace(/[_ ]/g, '');
+    for (const column in row) {
+      const colNorm = column.toLowerCase().replace(/[_ ]/g, '');
+      if (
+        colNorm === normalized ||
+        COLUMN_ALIASES[key].some((a) => a.replace(/[_ ]/g, '').toLowerCase() === colNorm)
+      ) {
+        return column;
+      }
+    }
+    return undefined;
+  };
+
+  const handleUpload = (data) => {
     const newNodes = data.map((row, index) => {
       const idKey = findKey(row, 'ID');
       const messageKey = findKey(row, 'Message_Text');

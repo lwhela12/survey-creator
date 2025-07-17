@@ -84,3 +84,9 @@ The turborepo has been setup.
     *   Used Warren button system with primary dark blue and secondary gray styling
     *   Maintained educational and approachable tone throughout interface copy
 *   The application now fully reflects the Warren brand identity with consistent visual design, appropriate educational terminology, and professional appearance suitable for student feedback collection.
+
+**July 17, 2025 - Codex**
+
+*   Added a column alias map and enhanced `findKey` logic in `builder/page.tsx` to recognize common spreadsheet header variations.
+*   Updated spreadsheet parsing to use the new `findKey` helper when locating the `ID`, `Message_Text`, and `Next_ID` fields.
+*   Uploading the provided "N _ GHAC Donor Survey V4 - Conversational Script.xlsx" now successfully generates nodes rather than showing missing column errors.
