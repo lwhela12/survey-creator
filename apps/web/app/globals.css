@@ -1,241 +1,600 @@
-/* Import Google Fonts for Warren typography */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* Enhanced Warren Brand Design System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-/* Warren Brand Design System */
+/* Warren Enhanced Color System */
 :root {
-  /* Brand Colors */
+  /* Primary Brand Colors */
   --warren-primary-dark-blue: #032E46;
+  --warren-primary-dark-blue-hover: #024a6b;
   --warren-secondary-green: #6EAD7C;
+  --warren-secondary-green-hover: #5a9669;
   --warren-off-white: #F8F7F4;
   --warren-page-background: #F6F4ED;
   --warren-light-gray: #D9D9D9;
   --warren-light-blue: #DAEDF0;
-  --warren-primary-text: #333333;
+  
+  /* Enhanced Color Palette */
+  --warren-primary-text: #1a2332;
   --warren-secondary-text: #6C757D;
   --warren-placeholder-text: #999999;
-  --warren-border: #CED4DA;
+  --warren-border: #E7E7EF;
+  --warren-border-hover: #D1D1DB;
   --warren-header-blue-gray: #DDE2E7;
+  --warren-success: #22c55e;
+  --warren-warning: #f59e0b;
+  --warren-error: #ef4444;
   
-  /* Legacy variables for compatibility */
-  --background: var(--warren-page-background);
-  --foreground: var(--warren-primary-text);
+  /* Shadows and Effects */
+  --warren-shadow-sm: 0 2px 8px rgba(3, 46, 70, 0.08);
+  --warren-shadow-md: 0 4px 16px rgba(3, 46, 70, 0.12);
+  --warren-shadow-lg: 0 8px 32px rgba(3, 46, 70, 0.16);
+  --warren-shadow-xl: 0 16px 48px rgba(3, 46, 70, 0.20);
+  
+  /* Gradients */
+  --warren-gradient-primary: linear-gradient(135deg, #032E46 0%, #024a6b 100%);
+  --warren-gradient-secondary: linear-gradient(135deg, #6EAD7C 0%, #5a9669 100%);
+  --warren-gradient-light: linear-gradient(135deg, #F8F7F4 0%, #F6F4ED 100%);
+  --warren-gradient-card: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  
+  /* Border Radius */
+  --warren-radius-sm: 6px;
+  --warren-radius-md: 12px;
+  --warren-radius-lg: 16px;
+  --warren-radius-xl: 24px;
+  --warren-radius-full: 9999px;
+  
+  /* Transitions */
+  --warren-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --warren-transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Typography fallback since we don't have access to Acumin Pro and Lust Display */
+/* Enhanced Typography */
 * {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-html,
-body {
+html, body {
   max-width: 100vw;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
-  color: #333333 !important;
-  background: #F6F4ED !important;
+  color: var(--warren-primary-text) !important;
+  background: var(--warren-page-background) !important;
   font-weight: 400;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Warren Typography Classes */
+/* Enhanced Typography Classes */
 .warren-hero-title {
-  font-size: 48px !important;
-  font-weight: 700 !important;
-  line-height: 1.2 !important;
-  color: #032E46 !important;
+  font-size: clamp(36px, 5vw, 56px) !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  color: var(--warren-primary-dark-blue) !important;
+  letter-spacing: -0.02em !important;
+  margin-bottom: 1.5rem !important;
 }
 
 .warren-section-header {
-  font-size: 24px !important;
-  font-weight: 600 !important;
-  color: #032E46 !important;
+  font-size: clamp(20px, 3vw, 28px) !important;
+  font-weight: 700 !important;
+  color: var(--warren-primary-dark-blue) !important;
   margin-bottom: 1rem !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.01em !important;
 }
 
 .warren-body-text {
   font-size: 16px !important;
   font-weight: 400 !important;
-  color: #333333 !important;
+  color: var(--warren-primary-text) !important;
+  line-height: 1.6 !important;
+}
+
+.warren-body-text-large {
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  color: var(--warren-primary-text) !important;
   line-height: 1.6 !important;
 }
 
 .warren-secondary-text {
-  color: #6C757D !important;
+  color: var(--warren-secondary-text) !important;
   font-size: 14px !important;
+  line-height: 1.5 !important;
 }
 
-/* Warren Component Styles */
+/* Enhanced Button System */
 .warren-btn-primary {
-  background-color: #032E46 !important;
+  background: var(--warren-gradient-primary) !important;
   color: white !important;
-  padding: 12px 28px !important;
-  border-radius: 7px !important;
+  padding: 14px 32px !important;
+  border-radius: var(--warren-radius-full) !important;
   font-weight: 600 !important;
+  font-size: 16px !important;
   border: none !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
+  transition: var(--warren-transition) !important;
   text-decoration: none !important;
-  display: inline-block !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
   text-align: center !important;
+  box-shadow: var(--warren-shadow-sm) !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 .warren-btn-primary:hover {
-  background-color: #024a6b !important;
-  transform: translateY(-1px) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--warren-shadow-md) !important;
+  background: var(--warren-primary-dark-blue-hover) !important;
+}
+
+.warren-btn-primary:active {
+  transform: translateY(0) !important;
+  box-shadow: var(--warren-shadow-sm) !important;
 }
 
 .warren-btn-secondary {
-  background-color: #EFEFF5 !important;
-  color: #333333 !important;
-  padding: 12px 28px !important;
-  border-radius: 7px !important;
+  background: white !important;
+  color: var(--warren-primary-dark-blue) !important;
+  padding: 14px 32px !important;
+  border-radius: var(--warren-radius-full) !important;
   font-weight: 600 !important;
-  border: none !important;
+  font-size: 16px !important;
+  border: 2px solid var(--warren-border) !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
+  transition: var(--warren-transition) !important;
   text-decoration: none !important;
-  display: inline-block !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
   text-align: center !important;
+  box-shadow: var(--warren-shadow-sm) !important;
 }
 
 .warren-btn-secondary:hover {
-  background-color: #E5E5EB !important;
-  transform: translateY(-1px) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--warren-shadow-md) !important;
+  border-color: var(--warren-primary-dark-blue) !important;
+  background: var(--warren-off-white) !important;
 }
 
+.warren-btn-success {
+  background: var(--warren-gradient-secondary) !important;
+  color: white !important;
+  padding: 14px 32px !important;
+  border-radius: var(--warren-radius-full) !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: var(--warren-transition) !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  text-align: center !important;
+  box-shadow: var(--warren-shadow-sm) !important;
+}
+
+.warren-btn-success:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--warren-shadow-md) !important;
+  background: var(--warren-secondary-green-hover) !important;
+}
+
+/* Enhanced Card System */
 .warren-card {
-  background: white !important;
-  border-radius: 16px !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
-  border: 1.5px solid #e7e7ef !important;
-  padding: 1.5rem !important;
-  margin-bottom: 1rem !important;
+  background: var(--warren-gradient-card) !important;
+  border-radius: var(--warren-radius-lg) !important;
+  box-shadow: var(--warren-shadow-sm) !important;
+  border: 1px solid var(--warren-border) !important;
+  padding: 24px !important;
+  margin-bottom: 16px !important;
+  transition: var(--warren-transition) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.warren-card:hover {
+  box-shadow: var(--warren-shadow-md) !important;
+  transform: translateY(-2px) !important;
+  border-color: var(--warren-border-hover) !important;
 }
 
 .warren-card-large {
-  background: white !important;
-  border-radius: 24px !important;
-  box-shadow: 0 6px 32px rgba(37,74,138,0.08) !important;
-  border: 1.5px solid #e7e7ef !important;
-  padding: 2rem !important;
-  margin-bottom: 2rem !important;
+  background: var(--warren-gradient-card) !important;
+  border-radius: var(--warren-radius-xl) !important;
+  box-shadow: var(--warren-shadow-md) !important;
+  border: 1px solid var(--warren-border) !important;
+  padding: 32px !important;
+  margin-bottom: 24px !important;
+  transition: var(--warren-transition) !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
+.warren-card-large:hover {
+  box-shadow: var(--warren-shadow-lg) !important;
+  transform: translateY(-2px) !important;
+}
+
+.warren-card-feature {
+  background: white !important;
+  border-radius: var(--warren-radius-lg) !important;
+  box-shadow: var(--warren-shadow-sm) !important;
+  border: 1px solid var(--warren-border) !important;
+  padding: 32px !important;
+  text-align: center !important;
+  transition: var(--warren-transition) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.warren-card-feature:hover {
+  box-shadow: var(--warren-shadow-lg) !important;
+  transform: translateY(-4px) !important;
+  border-color: var(--warren-secondary-green) !important;
+}
+
+.warren-card-feature::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--warren-gradient-secondary);
+  transform: scaleX(0);
+  transition: var(--warren-transition);
+}
+
+.warren-card-feature:hover::before {
+  transform: scaleX(1);
+}
+
+/* Enhanced Input System */
 .warren-input {
-  background-color: #DAEDF0 !important;
-  border: 1px solid #CED4DA !important;
-  border-radius: 30px !important;
-  height: 54px !important;
-  padding: 12px 16px !important;
+  background-color: white !important;
+  border: 2px solid var(--warren-border) !important;
+  border-radius: var(--warren-radius-md) !important;
+  height: 56px !important;
+  padding: 16px 20px !important;
   font-size: 16px !important;
+  font-weight: 500 !important;
   width: 100% !important;
   outline: none !important;
-  transition: border-color 0.2s ease !important;
+  transition: var(--warren-transition) !important;
+  color: var(--warren-primary-text) !important;
+  box-shadow: var(--warren-shadow-sm) !important;
 }
 
 .warren-input:focus {
-  border-color: #032E46 !important;
-  box-shadow: 0 0 0 3px rgba(3, 46, 70, 0.1) !important;
+  border-color: var(--warren-primary-dark-blue) !important;
+  box-shadow: 0 0 0 4px rgba(3, 46, 70, 0.1) !important;
+  transform: translateY(-1px) !important;
+}
+
+.warren-input::placeholder {
+  color: var(--warren-placeholder-text) !important;
+  font-weight: 400 !important;
 }
 
 .warren-textarea {
-  background-color: var(--warren-light-blue);
-  border: 1px solid var(--warren-border);
-  border-radius: 12px;
-  padding: 12px 16px;
-  font-size: 16px;
-  width: 100%;
-  outline: none;
-  resize: vertical;
-  min-height: 120px;
-  transition: border-color 0.2s ease;
+  background-color: white !important;
+  border: 2px solid var(--warren-border) !important;
+  border-radius: var(--warren-radius-md) !important;
+  padding: 16px 20px !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  width: 100% !important;
+  outline: none !important;
+  resize: vertical !important;
+  min-height: 120px !important;
+  transition: var(--warren-transition) !important;
+  color: var(--warren-primary-text) !important;
+  box-shadow: var(--warren-shadow-sm) !important;
+  font-family: inherit !important;
+  line-height: 1.6 !important;
 }
 
 .warren-textarea:focus {
-  border-color: var(--warren-primary-dark-blue);
-  box-shadow: 0 0 0 3px rgba(3, 46, 70, 0.1);
+  border-color: var(--warren-primary-dark-blue) !important;
+  box-shadow: 0 0 0 4px rgba(3, 46, 70, 0.1) !important;
+  transform: translateY(-1px) !important;
 }
 
-.warren-sidebar {
-  background-color: var(--warren-light-gray);
-  width: 281px;
-  min-height: 100vh;
-  padding: 1rem;
-}
-
+/* Enhanced Layout Components */
 .warren-main-content {
-  background-color: #F8F7F4 !important;
+  background: var(--warren-page-background) !important;
   min-height: 100vh !important;
-  padding: 2rem !important;
+  padding: 32px !important;
 }
 
-/* Warren Success State */
+.warren-hero-section {
+  background: var(--warren-gradient-light) !important;
+  padding: 80px 0 !important;
+  text-align: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.warren-hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23032E46' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+  z-index: 0 !important;
+}
+
+.warren-hero-section > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Enhanced Navigation */
+.warren-nav {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  border-bottom: 1px solid var(--warren-border) !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  transition: var(--warren-transition) !important;
+}
+
+.warren-nav-link {
+  color: var(--warren-primary-text) !important;
+  font-weight: 500 !important;
+  padding: 8px 16px !important;
+  border-radius: var(--warren-radius-md) !important;
+  transition: var(--warren-transition) !important;
+  text-decoration: none !important;
+}
+
+.warren-nav-link:hover {
+  background: var(--warren-light-blue) !important;
+  color: var(--warren-primary-dark-blue) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Enhanced Success States */
 .warren-success {
-  color: var(--warren-secondary-green);
-  background-color: rgba(110, 173, 124, 0.1);
-  border: 1px solid var(--warren-secondary-green);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
+  color: var(--warren-success) !important;
+  background: rgba(34, 197, 94, 0.1) !important;
+  border: 1px solid var(--warren-success) !important;
+  border-radius: var(--warren-radius-md) !important;
+  padding: 16px 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+.warren-warning {
+  color: var(--warren-warning) !important;
+  background: rgba(245, 158, 11, 0.1) !important;
+  border: 1px solid var(--warren-warning) !important;
+  border-radius: var(--warren-radius-md) !important;
+  padding: 16px 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.warren-error {
+  color: var(--warren-error) !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid var(--warren-error) !important;
+  border-radius: var(--warren-radius-md) !important;
+  padding: 16px 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
 
-.imgDark {
-  display: none;
+/* Enhanced Chat Interface */
+.warren-chat-container {
+  background: white !important;
+  border-radius: var(--warren-radius-xl) !important;
+  box-shadow: var(--warren-shadow-lg) !important;
+  border: 1px solid var(--warren-border) !important;
+  overflow: hidden !important;
+  height: 500px !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+.warren-chat-header {
+  background: var(--warren-gradient-primary) !important;
+  color: white !important;
+  padding: 20px 24px !important;
+  text-align: center !important;
+}
+
+.warren-chat-messages {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  padding: 20px !important;
+  background: var(--warren-off-white) !important;
+}
+
+.warren-chat-input-area {
+  background: white !important;
+  border-top: 1px solid var(--warren-border) !important;
+  padding: 20px !important;
+}
+
+.warren-message-bot {
+  background: white !important;
+  color: var(--warren-primary-text) !important;
+  border-radius: 20px 20px 20px 4px !important;
+  padding: 16px 20px !important;
+  margin-bottom: 12px !important;
+  box-shadow: var(--warren-shadow-sm) !important;
+  border: 1px solid var(--warren-border) !important;
+  max-width: 80% !important;
+  animation: slideInLeft 0.3s ease-out !important;
+}
+
+.warren-message-user {
+  background: var(--warren-gradient-primary) !important;
+  color: white !important;
+  border-radius: 20px 20px 4px 20px !important;
+  padding: 16px 20px !important;
+  margin-bottom: 12px !important;
+  margin-left: auto !important;
+  box-shadow: var(--warren-shadow-sm) !important;
+  max-width: 80% !important;
+  animation: slideInRight 0.3s ease-out !important;
+}
+
+/* Animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
   }
-
-  .imgLight {
-    display: none;
-  }
-  .imgDark {
-    display: unset;
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-/* Typing indicator animation */
-.typing-indicator {
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 768px) {
+  .warren-main-content {
+    padding: 16px !important;
+  }
+  
+  .warren-hero-section {
+    padding: 40px 0 !important;
+  }
+  
+  .warren-card, .warren-card-large {
+    margin-bottom: 16px !important;
+    padding: 20px !important;
+  }
+  
+  .warren-btn-primary, .warren-btn-secondary, .warren-btn-success {
+    padding: 12px 24px !important;
+    font-size: 14px !important;
+  }
+  
+  .warren-chat-container {
+    height: 400px !important;
+  }
+}
+
+/* Enhanced Loading States */
+.warren-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--warren-border);
+  border-radius: 50%;
+  border-top-color: var(--warren-primary-dark-blue);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Enhanced Typing Indicator */
+.warren-typing-indicator {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
+  padding: 12px 16px;
+  background: white;
+  border-radius: 20px 20px 20px 4px;
+  box-shadow: var(--warren-shadow-sm);
+  border: 1px solid var(--warren-border);
+  max-width: 80px;
+  margin-bottom: 12px;
 }
 
-.typing-indicator span {
+.warren-typing-indicator span {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #999;
+  background-color: var(--warren-secondary-text);
   animation: typing 1.4s infinite ease-in-out;
 }
 
-.typing-indicator span:nth-child(1) {
-  animation-delay: -0.32s;
-}
-
-.typing-indicator span:nth-child(2) {
-  animation-delay: -0.16s;
-}
+.warren-typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.warren-typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
 
 @keyframes typing {
   0%, 80%, 100% {
-    transform: scale(0);
+    transform: scale(0.8);
+    opacity: 0.5;
   }
   40% {
     transform: scale(1);
+    opacity: 1;
   }
+}
+
+/* Enhanced Focus States for Accessibility */
+*:focus {
+  outline: 2px solid var(--warren-primary-dark-blue) !important;
+  outline-offset: 2px !important;
+}
+
+/* Enhanced Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--warren-border);
+  border-radius: var(--warren-radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--warren-secondary-text);
+  border-radius: var(--warren-radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--warren-primary-dark-blue);
 }

@@ -25,27 +25,173 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <nav style={{ backgroundColor: 'var(--warren-light-gray)', borderBottom: '1px solid var(--warren-border)' }}>
+        {/* Enhanced Navigation */}
+        <nav className="warren-nav">
           <div className="container mx-auto px-4">
-            <div className="flex justify-between items-center h-16">
-              <Link href="/" className="warren-section-header text-xl font-bold" style={{ color: 'var(--warren-primary-dark-blue)' }}>
-                🐰 Warren
+            <div className="flex justify-between items-center h-20">
+              {/* Logo and Brand */}
+              <Link href="/" className="flex items-center gap-3 group">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-green-100 rounded-full flex items-center justify-center text-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+                  🐰
+                </div>
+                <div>
+                  <span className="warren-section-header text-2xl font-bold m-0" style={{ color: 'var(--warren-primary-dark-blue)' }}>
+                    Warren
+                  </span>
+                  <div className="warren-secondary-text text-xs -mt-1">
+                    Student Voice Insights
+                  </div>
+                </div>
               </Link>
-              <div className="flex space-x-6">
-                <Link href="/survey" className="warren-body-text font-medium hover:font-bold transition-all" style={{ color: 'var(--warren-primary-text)' }}>
-                  The Den
+              
+              {/* Navigation Links */}
+              <div className="hidden md:flex items-center space-x-2">
+                <Link href="/survey" className="warren-nav-link">
+                  <span className="flex items-center gap-2">
+                    🏠 The Den
+                  </span>
                 </Link>
-                <Link href="/builder" className="warren-body-text font-medium hover:font-bold transition-all" style={{ color: 'var(--warren-primary-text)' }}>
-                  Burrow Builder
+                <Link href="/builder" className="warren-nav-link">
+                  <span className="flex items-center gap-2">
+                    🏗️ Burrow Builder
+                  </span>
                 </Link>
-                <Link href="/style" className="warren-body-text font-medium hover:font-bold transition-all" style={{ color: 'var(--warren-primary-text)' }}>
-                  Warren Style
+                <Link href="/style" className="warren-nav-link">
+                  <span className="flex items-center gap-2">
+                    🎨 Warren Style
+                  </span>
                 </Link>
+                
+                {/* CTA Button */}
+                <div className="ml-4">
+                  <Link href="/builder" className="warren-btn-primary text-sm px-6 py-3">
+                    <span>🚀</span>
+                    Start Building
+                  </Link>
+                </div>
+              </div>
+
+              {/* Mobile Menu Button */}
+              <div className="md:hidden">
+                <button 
+                  className="warren-btn-secondary p-3"
+                  onClick={() => {
+                    const menu = document.getElementById('mobile-menu');
+                    menu?.classList.toggle('hidden');
+                  }}
+                >
+                  <span className="text-lg">☰</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile Navigation Menu */}
+            <div id="mobile-menu" className="hidden md:hidden pb-4">
+              <div className="flex flex-col space-y-2">
+                <Link href="/survey" className="warren-nav-link">
+                  <span className="flex items-center gap-2">
+                    🏠 The Den
+                  </span>
+                </Link>
+                <Link href="/builder" className="warren-nav-link">
+                  <span className="flex items-center gap-2">
+                    🏗️ Burrow Builder
+                  </span>
+                </Link>
+                <Link href="/style" className="warren-nav-link">
+                  <span className="flex items-center gap-2">
+                    🎨 Warren Style
+                  </span>
+                </Link>
+                <div className="pt-2">
+                  <Link href="/builder" className="warren-btn-primary w-full text-center">
+                    <span>🚀</span>
+                    Start Building
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </nav>
-        {children}
+
+        {/* Main Content */}
+        <main>
+          {children}
+        </main>
+
+        {/* Enhanced Footer */}
+        <footer className="bg-gradient-to-br from-gray-50 to-gray-100 border-t border-gray-200 mt-16">
+          <div className="container mx-auto px-4 py-12">
+            <div className="grid md:grid-cols-4 gap-8 mb-8">
+              {/* Brand Column */}
+              <div className="md:col-span-2">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-green-100 rounded-full flex items-center justify-center text-lg">
+                    🐰
+                  </div>
+                  <span className="warren-section-header text-xl m-0" style={{ color: 'var(--warren-primary-dark-blue)' }}>
+                    Warren
+                  </span>
+                </div>
+                <p className="warren-body-text mb-4 max-w-md" style={{ color: 'var(--warren-secondary-text)' }}>
+                  Transforming how educators gather student feedback through engaging conversational burrows. 
+                  Every student voice matters.
+                </p>
+                <div className="flex gap-3">
+                  <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors border border-gray-200 hover:border-blue-200">
+                    📧
+                  </a>
+                  <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors border border-gray-200 hover:border-blue-200">
+                    🐦
+                  </a>
+                  <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors border border-gray-200 hover:border-blue-200">
+                    💼
+                  </a>
+                </div>
+              </div>
+
+              {/* Product Links */}
+              <div>
+                <h4 className="warren-body-text font-semibold mb-4">Product</h4>
+                <ul className="space-y-2">
+                  <li><Link href="/builder" className="warren-secondary-text hover:text-blue-600 transition-colors">Burrow Builder</Link></li>
+                  <li><Link href="/style" className="warren-secondary-text hover:text-blue-600 transition-colors">Warren Style</Link></li>
+                  <li><Link href="/survey" className="warren-secondary-text hover:text-blue-600 transition-colors">The Den</Link></li>
+                  <li><Link href="/analytics" className="warren-secondary-text hover:text-blue-600 transition-colors">Analytics</Link></li>
+                </ul>
+              </div>
+
+              {/* Support Links */}
+              <div>
+                <h4 className="warren-body-text font-semibold mb-4">Support</h4>
+                <ul className="space-y-2">
+                  <li><Link href="/docs" className="warren-secondary-text hover:text-blue-600 transition-colors">Documentation</Link></li>
+                  <li><Link href="/help" className="warren-secondary-text hover:text-blue-600 transition-colors">Help Center</Link></li>
+                  <li><Link href="/community" className="warren-secondary-text hover:text-blue-600 transition-colors">Community</Link></li>
+                  <li><Link href="/contact" className="warren-secondary-text hover:text-blue-600 transition-colors">Contact Us</Link></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Bottom Bar */}
+            <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="warren-secondary-text text-sm">
+                © 2025 Warren Education. All rights reserved. Made with 🐰 for educators.
+              </div>
+              <div className="flex gap-6">
+                <Link href="/privacy" className="warren-secondary-text text-sm hover:text-blue-600 transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link href="/terms" className="warren-secondary-text text-sm hover:text-blue-600 transition-colors">
+                  Terms of Service
+                </Link>
+                <Link href="/accessibility" className="warren-secondary-text text-sm hover:text-blue-600 transition-colors">
+                  Accessibility
+                </Link>
+              </div>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );
