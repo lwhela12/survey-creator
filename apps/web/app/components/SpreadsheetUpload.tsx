@@ -4,23 +4,30 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 
-const SpreadsheetUpload = ({ onUpload }) => {
+const SpreadsheetUpload = ({ onUpload }: { onUpload: (data: any[]) => void }) => {
   const [uploading, setUploading] = useState(false);
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
       setUploading(true);
       const reader = new FileReader();
       reader.onload = (e) => {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const json = XLSX.utils.sheet_to_json(worksheet, { blankrows: false });
-        console.log("Parsed JSON from spreadsheet:", json); // <--- ADDED THIS LINE
-        onUpload(json);
-        setUploading(false);
+        const result = e.target?.result;
+        if (result && typeof result !== 'string') {
+          const data = new Uint8Array(result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = workbook.SheetNames[0];
+          if (sheetName) {
+            const worksheet = workbook.Sheets[sheetName];
+            if (worksheet) {
+              const json = XLSX.utils.sheet_to_json(worksheet, { blankrows: false });
+              console.log("Parsed JSON from spreadsheet:", json);
+              onUpload(json);
+              setUploading(false);
+            }
+          }
+        }
       };
       reader.readAsArrayBuffer(file);
     }
@@ -56,14 +63,17 @@ const SpreadsheetUpload = ({ onUpload }) => {
         )}
       </div>
       
-      <div className="mt-4 p-4 rounded-lg" style={{ backgroundColor: 'var(--warren-light-blue)' }}>
+      <div className="mt-4 p-4 rounded-lg" style={{ backgroundColor: 'var(--warren-gray-50)', border: '1px solid var(--warren-border)' }}>
         <h4 className="warren-body-text font-semibold mb-2">File Format Requirements:</h4>
         <ul className="warren-body-text text-sm space-y-1" style={{ color: 'var(--warren-secondary-text)' }}>
-          <li>• ID column (unique identifier for each question)</li>
-          <li>• Message_Text column (the question or message text)</li>
-          <li>• Question_Type column (statement, text, number, single_choice, multi_choice)</li>
-          <li>• Next_ID column (for question flow and branching)</li>
+          <li>• <strong>ID column</strong> (unique identifier) - accepts: Block #, ID, id, item_id, question_id, step</li>
+          <li>• <strong>Message/Text column</strong> (question text) - accepts: Question/Content, Message_Text, message, text, question, content</li>
+          <li>• <strong>Type column</strong> (optional) - accepts: Response Type, Question_Type, type, kind, format</li>
+          <li>• <strong>Next column</strong> (optional, for branching) - accepts: Logic/Branching, Next_ID, next, goto, target</li>
         </ul>
+        <p className="warren-secondary-text text-xs mt-2">
+          💡 Warren is flexible with column names - if upload fails, check the browser console for available columns.
+        </p>
       </div>
     </div>
   );

@@ -5,8 +5,8 @@ import Flow from '../components/Flow';
 import SpreadsheetUpload from '../components/SpreadsheetUpload';
 
 const BuilderPage = () => {
-  const [nodes, setNodes] = useState([]);
-  const [edges, setEdges] = useState([]);
+  const [nodes, setNodes] = useState<any[]>([]);
+  const [edges, setEdges] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState<{ type: 'success' | 'error' | 'warning', message: string } | null>(null);
 
@@ -15,26 +15,68 @@ const BuilderPage = () => {
     setTimeout(() => setNotification(null), 5000);
   };
 
-  const handleUpload = (data) => {
+  const handleUpload = (data: any[]) => {
     setIsLoading(true);
     
     try {
-      const findKey = (obj, keyToFind) => {
-        const normalizedKeyToFind = keyToFind.toLowerCase().replace(/[_ ]/g, "");
-        for (const key in obj) {
-          if (key.toLowerCase().replace(/[_ ]/g, "") === normalizedKeyToFind) {
-            return key;
+      console.log('Processing spreadsheet data:', data);
+      
+      // Log the first row to understand the column structure
+      if (data.length > 0) {
+        console.log('First row columns:', Object.keys(data[0]));
+      }
+      // Column alias mapping for common spreadsheet variations
+      const columnAliases = {
+        'ID': ['id', 'ID', 'Id', 'item_id', 'item id', 'question_id', 'question id', 'node_id', 'node id', 'step', 'step_id', 'step id', 'Block #', 'block #', 'Block', 'block', 'Block Number', 'block number'],
+        'Message_Text': ['message_text', 'Message_Text', 'message text', 'Message Text', 'text', 'Text', 'question', 'Question', 'content', 'Content', 'message', 'Message', 'Question/Content', 'question/content', 'Question Content', 'question content'],
+        'Question_Type': ['question_type', 'Question_Type', 'question type', 'Question Type', 'type', 'Type', 'kind', 'Kind', 'format', 'Format', 'Response Type', 'response type', 'ResponseType', 'response_type'],
+        'Next_ID': ['next_id', 'Next_ID', 'next id', 'Next ID', 'nextid', 'NextID', 'next', 'Next', 'goto', 'GoTo', 'target', 'Target', 'Logic/Branching', 'logic/branching', 'Logic', 'logic', 'Branching', 'branching']
+      };
+
+      const findKey = (obj: any, keyToFind: string) => {
+        const aliases = columnAliases[keyToFind as keyof typeof columnAliases] || [keyToFind];
+        
+        for (const alias of aliases) {
+          // First try exact match
+          if (obj.hasOwnProperty(alias)) {
+            console.log(`Found exact match for ${keyToFind}: ${alias}`);
+            return alias;
+          }
+          
+          // Then try case-insensitive match
+          const normalizedAlias = alias.toLowerCase().replace(/[_ ]/g, "");
+          for (const key in obj) {
+            if (key.toLowerCase().replace(/[_ ]/g, "") === normalizedAlias) {
+              console.log(`Found normalized match for ${keyToFind}: ${key} (matched alias: ${alias})`);
+              return key;
+            }
           }
         }
+        
+        console.log(`No match found for ${keyToFind}. Tried aliases:`, aliases);
         return undefined;
       }
 
-      const newNodes = data.map((row, index) => {
+      const newNodes = data.map((row: any, index: number) => {
         const idKey = findKey(row, 'ID');
         const messageKey = findKey(row, 'Message_Text');
 
         if (!idKey || row[idKey] === undefined) {
-          console.error(`Row ${index + 1} is missing a valid 'ID' column:`, row);
+          const availableColumns = Object.keys(row).join(', ');
+          console.error(`Row ${index + 1} is missing a valid 'ID' column. Available columns: ${availableColumns}`, row);
+          return null;
+        }
+
+        // Skip header rows or section dividers (non-numeric IDs that look like headers)
+        const idValue = row[idKey];
+        if (typeof idValue === 'string' && (
+          idValue.includes('CONVERSATION') || 
+          idValue.includes('SECTION') || 
+          idValue.includes('OPENING') ||
+          idValue.includes('CLOSING') ||
+          idValue.toUpperCase() === idValue && idValue.length > 10
+        )) {
+          console.log(`Skipping header/section row: ${idValue}`);
           return null;
         }
 
@@ -42,8 +84,8 @@ const BuilderPage = () => {
           id: row[idKey].toString(),
           position: { x: 100 + (index % 3) * 250, y: 50 + Math.floor(index / 3) * 150 },
           data: { 
-            label: row[messageKey],
-            questionType: row[findKey(row, 'Question_Type')] || 'statement'
+            label: row[messageKey || ''] || `Question ${index + 1}`,
+            questionType: row[findKey(row, 'Question_Type') || ''] || 'statement'
           },
           style: {
             background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
@@ -56,8 +98,15 @@ const BuilderPage = () => {
         };
       }).filter(Boolean);
 
+      // Check if we have any valid nodes
+      if (newNodes.length === 0) {
+        const firstRow = data[0];
+        const availableColumns = firstRow ? Object.keys(firstRow).join(', ') : 'No columns found';
+        throw new Error(`No valid survey nodes found. Please check your spreadsheet format. Available columns: ${availableColumns}`);
+      }
+
       const newEdges = data
-        .map((row) => {
+        .map((row: any) => {
           const idKey = findKey(row, 'ID');
           const nextIdKey = findKey(row, 'Next_ID');
 
@@ -134,7 +183,7 @@ const BuilderPage = () => {
       const response = await fetch(`http://localhost:3001/api/surveys/${surveyId}`);
       if (response.ok) {
         const surveyData = await response.json();
-        const newNodes = Object.entries(surveyData.nodes).map(([id, node], index) => ({
+        const newNodes = Object.entries(surveyData.nodes).map(([id, node]: [string, any], index: number) => ({
           id,
           position: { x: 100 + (index % 3) * 250, y: 50 + Math.floor(index / 3) * 150 },
           data: { 
@@ -152,8 +201,8 @@ const BuilderPage = () => {
         }));
 
         const newEdges = Object.entries(surveyData.nodes)
-          .filter(([id, node]) => node.nextId)
-          .map(([id, node]) => ({
+          .filter(([id, node]: [string, any]) => node.nextId)
+          .map(([id, node]: [string, any]) => ({
             id: `e${id}-${node.nextId}`,
             source: id,
             target: node.nextId,
@@ -276,33 +325,28 @@ const BuilderPage = () => {
         )}
 
         {/* Header Section */}
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-green-100 rounded-full flex items-center justify-center text-2xl">
-              🏗️
-            </div>
-            <div>
-              <h1 className="warren-hero-title mb-2">Burrow Builder</h1>
-              <p className="warren-body-text" style={{ color: 'var(--warren-secondary-text)' }}>
-                Create your conversational survey burrow by uploading a spreadsheet or building from scratch.
-              </p>
-            </div>
+        <div className="mb-12">
+          <div className="text-center mb-8">
+            <h1 className="warren-hero-title mb-4">Survey Builder</h1>
+            <p className="warren-body-text max-w-2xl mx-auto" style={{ color: 'var(--warren-secondary-text)' }}>
+              Create your conversational survey by uploading a spreadsheet or building from scratch.
+            </p>
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="warren-card text-center">
-              <div className="text-2xl mb-2">📊</div>
+              <div className="text-lg mb-2">📊</div>
               <div className="warren-body-text font-semibold">{nodes.length}</div>
               <div className="warren-secondary-text text-sm">Survey Nodes</div>
             </div>
             <div className="warren-card text-center">
-              <div className="text-2xl mb-2">🔗</div>
+              <div className="text-lg mb-2">🔗</div>
               <div className="warren-body-text font-semibold">{edges.length}</div>
               <div className="warren-secondary-text text-sm">Connections</div>
             </div>
             <div className="warren-card text-center">
-              <div className="text-2xl mb-2">⚡</div>
+              <div className="text-lg mb-2">⚡</div>
               <div className="warren-body-text font-semibold">Live</div>
               <div className="warren-secondary-text text-sm">Preview Ready</div>
             </div>
@@ -315,9 +359,9 @@ const BuilderPage = () => {
           
           {/* Or Divider */}
           <div className="flex items-center my-8">
-            <div className="flex-1 h-px bg-gray-200"></div>
+            <div className="flex-1 h-px" style={{ background: 'var(--warren-border)' }}></div>
             <div className="px-4 warren-secondary-text font-medium">or</div>
-            <div className="flex-1 h-px bg-gray-200"></div>
+            <div className="flex-1 h-px" style={{ background: 'var(--warren-border)' }}></div>
           </div>
           
           {/* Quick Actions */}
@@ -329,16 +373,14 @@ const BuilderPage = () => {
                 className="warren-btn-secondary"
                 disabled={isLoading}
               >
-                <span>✨</span>
-                Create Sample Burrow
+                Create Sample Survey
               </button>
               <button 
                 onClick={handleLoad}
                 className="warren-btn-secondary"
                 disabled={isLoading}
               >
-                <span>📂</span>
-                Load Existing Burrow
+                Load Existing Survey
               </button>
             </div>
           </div>
@@ -357,10 +399,7 @@ const BuilderPage = () => {
                 Saving...
               </>
             ) : (
-              <>
-                <span>💾</span>
-                Save Burrow
-              </>
+              'Save Survey'
             )}
           </button>
           
@@ -375,10 +414,7 @@ const BuilderPage = () => {
                 Loading...
               </>
             ) : (
-              <>
-                <span>📂</span>
-                Load Burrow
-              </>
+              'Load Survey'
             )}
           </button>
 
@@ -387,8 +423,7 @@ const BuilderPage = () => {
               href="/style" 
               className="warren-btn-success"
             >
-              <span>🎨</span>
-              Style Your Warren
+              Customize Style
             </a>
           )}
 
@@ -399,16 +434,15 @@ const BuilderPage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>👁️</span>
-              Preview Burrow
+              Preview Survey
             </a>
           )}
         </div>
 
         {/* Flow Editor */}
         <div className="warren-card-large">
-          <div className="mb-4 flex justify-between items-center">
-            <h2 className="warren-section-header">Visual Burrow Editor</h2>
+          <div className="mb-6 text-center">
+            <h2 className="warren-section-header mb-2">Visual Survey Editor</h2>
             {nodes.length === 0 && (
               <div className="warren-secondary-text text-sm">
                 Upload a spreadsheet or create a sample to get started
@@ -419,20 +453,26 @@ const BuilderPage = () => {
           <div className="relative">
             {nodes.length === 0 ? (
               // Empty State
-              <div className="h-96 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
+              <div className="h-96 rounded-lg border-2 border-dashed flex items-center justify-center" style={{ borderColor: 'var(--warren-border)', background: 'var(--warren-gray-50)' }}>
                 <div className="text-center max-w-md">
-                  <div className="text-6xl mb-4">🐰</div>
-                  <h3 className="warren-section-header text-lg mb-2">Ready to Dig Your First Burrow?</h3>
+                  <div className="w-6 h-6 mx-auto mb-4">
+                    <img 
+                      src="/NesolagusLogo.png" 
+                      alt="Nesolagus Logo" 
+                      className="w-6 h-6 object-contain opacity-50"
+                      style={{ width: '24px', height: '24px' }}
+                    />
+                  </div>
+                  <h3 className="warren-section-header text-lg mb-2">Ready to Build Your Survey?</h3>
                   <p className="warren-secondary-text mb-6">
-                    Upload your survey spreadsheet above or create a sample burrow to see the visual editor in action.
+                    Upload your survey spreadsheet above or create a sample survey to see the visual editor in action.
                   </p>
                   <div className="flex flex-col gap-2">
                     <button 
                       onClick={handleCreateSample}
                       className="warren-btn-primary"
                     >
-                      <span>✨</span>
-                      Create Sample Burrow
+                      Create Sample Survey
                     </button>
                   </div>
                 </div>
@@ -446,9 +486,9 @@ const BuilderPage = () => {
           </div>
           
           {nodes.length > 0 && (
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <h4 className="warren-body-text font-semibold mb-2 text-blue-800">💡 Editor Tips:</h4>
-              <ul className="warren-secondary-text text-sm space-y-1 text-blue-700">
+            <div className="mt-6 p-4 rounded-lg border" style={{ background: 'var(--warren-gray-50)', borderColor: 'var(--warren-border)' }}>
+              <h4 className="warren-body-text font-semibold mb-2">Editor Tips:</h4>
+              <ul className="warren-secondary-text text-sm space-y-1">
                 <li>• Drag nodes to rearrange your conversation flow</li>
                 <li>• Connect nodes by dragging from the edge handles</li>
                 <li>• Use the minimap and controls in the bottom right</li>
@@ -465,13 +505,13 @@ const BuilderPage = () => {
             <div>
               <h4 className="warren-body-text font-semibold mb-2">📋 Spreadsheet Format</h4>
               <p className="warren-secondary-text text-sm mb-4">
-                Your spreadsheet should include these columns:
+                Your spreadsheet should include these columns (various naming formats supported):
               </p>
               <ul className="warren-secondary-text text-sm space-y-1">
-                <li><strong>ID:</strong> Unique identifier for each question</li>
-                <li><strong>Message_Text:</strong> The question or message text</li>
-                <li><strong>Question_Type:</strong> statement, text, number, single_choice, multi_choice</li>
-                <li><strong>Next_ID:</strong> Which question comes next</li>
+                <li><strong>ID:</strong> Unique identifier (also accepts: Block #, id, item_id, question_id, step, etc.)</li>
+                <li><strong>Message_Text:</strong> The question text (also accepts: Question/Content, message, text, question, content)</li>
+                <li><strong>Question_Type:</strong> Question type (also accepts: Response Type, type, kind, format) - statement, text, number, single_choice, multi_choice</li>
+                <li><strong>Next_ID:</strong> Next question (also accepts: Logic/Branching, next, goto, target)</li>
               </ul>
             </div>
             <div>

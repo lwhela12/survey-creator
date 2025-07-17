@@ -166,10 +166,8 @@ const StyleEditor: React.FC<StyleEditorProps> = ({
                 onChange={handleAvatarUpload}
                 className="warren-input cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:cursor-pointer"
                 style={{ 
-                  color: 'var(--warren-secondary-text)',
-                  '--file-bg': 'var(--warren-secondary-green)',
-                  '--file-color': 'white'
-                }}
+                  color: 'var(--warren-secondary-text)'
+                } as React.CSSProperties}
               />
               {styleConfig.avatarUrl && (
                 <div className="flex items-center gap-2">
@@ -195,10 +193,8 @@ const StyleEditor: React.FC<StyleEditorProps> = ({
               onChange={handleFaviconUpload}
               className="warren-input cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:cursor-pointer"
               style={{ 
-                color: 'var(--warren-secondary-text)',
-                '--file-bg': 'var(--warren-secondary-green)',
-                '--file-color': 'white'
-              }}
+                color: 'var(--warren-secondary-text)'
+              } as React.CSSProperties}
             />
           </div>
 

@@ -38,6 +38,7 @@ const ChatClient: React.FC<ChatClientProps> = ({
   const [inputValue, setInputValue] = useState('');
   const [isComplete, setIsComplete] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messageIdCounter = useRef<number>(0);
 
   const defaultStyle = {
     botMessageBg: '#ECEFF1',
@@ -85,7 +86,7 @@ const ChatClient: React.FC<ChatClientProps> = ({
     
     setTimeout(() => {
       const botMessage: ChatMessage = {
-        id: `bot-${nodeId}`,
+        id: `bot-${nodeId}-${messageIdCounter.current++}`,
         type: 'bot',
         content: node.messageText,
         timestamp: new Date(),
@@ -100,7 +101,7 @@ const ChatClient: React.FC<ChatClientProps> = ({
 
   const handleUserResponse = (nodeId: string, answer: any) => {
     const userMessage: ChatMessage = {
-      id: `user-${nodeId}`,
+      id: `user-${nodeId}-${messageIdCounter.current++}`,
       type: 'user',
       content: Array.isArray(answer) ? answer.join(', ') : answer.toString(),
       timestamp: new Date()

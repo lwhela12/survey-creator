@@ -11,18 +11,23 @@ const NavBar = () => {
   return (
     <nav className="warren-nav">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-green-100 rounded-full flex items-center justify-center text-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-              🐰
+            <div className="w-4 h-4 transition-all duration-300 group-hover:scale-105">
+              <img 
+                src="/NesolagusLogo.png" 
+                alt="Nesolagus Logo" 
+                className="w-4 h-4 object-contain"
+                style={{ width: '16px', height: '16px' }}
+              />
             </div>
             <div>
-              <span className="warren-section-header text-2xl font-bold m-0" style={{ color: 'var(--warren-primary-dark-blue)' }}>
+              <span className="warren-section-header text-xl font-semibold m-0" style={{ color: 'var(--warren-primary-dark-blue)' }}>
                 Warren
               </span>
               <div className="warren-secondary-text text-xs -mt-1">
-                Student Voice Insights
+                powered by Nesolagus
               </div>
             </div>
           </Link>

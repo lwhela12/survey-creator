@@ -95,3 +95,49 @@ The turborepo has been setup.
 
 *   Moved navigation markup into new `NavBar` client component to avoid server component event handler error.
 *   Updated `layout.tsx` to include `NavBar` and keep metadata export.
+
+**July 17, 2025 - Claude (Modern UI Redesign)**
+
+*   **Implemented Modern, Minimal Design System**:
+    *   Completely redesigned the color system with modern neutral grays and refined brand colors
+    *   Updated typography to use a cleaner, more minimal approach with improved hierarchy
+    *   Reduced visual noise by simplifying shadows, borders, and spacing
+    *   Created a cohesive design system with consistent spacing tokens (--warren-space-xs to --warren-space-3xl)
+    *   Modernized button styles with subtle hover effects and improved accessibility
+*   **Added Nesolagus Branding Integration**:
+    *   Copied Nesolagus logo to the web app and integrated it throughout the UI
+    *   Updated navigation bar to feature the Nesolagus logo with "powered by Nesolagus" branding
+    *   Replaced rabbit emoji with actual Nesolagus logo in hero sections and empty states
+    *   Updated footer to be minimal and clean with Nesolagus branding
+*   **Improved Visual Hierarchy and Spacing**:
+    *   Redesigned homepage with cleaner sections and improved content flow
+    *   Streamlined feature cards with better spacing and typography
+    *   Simplified navigation with better visual balance
+    *   Updated builder page with centered layouts and improved user experience
+    *   Made the interface more scannable with consistent spacing patterns
+*   **Enhanced User Experience**:
+    *   Reduced cognitive load by removing unnecessary elements and visual clutter
+    *   Improved button and input styling for better usability
+    *   Created a more professional and trustworthy appearance
+    *   Fixed all TypeScript errors to ensure code quality
+*   The application now has a sleek, modern, and minimal interface that maintains the Warren theme while showcasing Nesolagus branding professionally.
+
+**July 17, 2025 - Claude (Bug Fixes & Improvements)**
+
+*   **Fixed Spreadsheet Upload Issues**:
+    *   Enhanced column alias system to support "Block #" as ID column (from sample spreadsheet)
+    *   Added support for "Question/Content", "Response Type", and "Logic/Branching" column names
+    *   Improved header row detection to skip section dividers like "CONVERSATION OPENING"
+    *   Updated help documentation to reflect new supported column variations
+*   **Fixed React Hydration Errors**:
+    *   Resolved server/client HTML mismatch issues with logo sizing
+    *   Standardized logo dimensions and removed conflicting CSS properties
+    *   Simplified inline styles to prevent hydration conflicts
+*   **Fixed Duplicate Key Warnings**:
+    *   Implemented unique message ID generation in ChatClient component
+    *   Added message counter to ensure unique keys across chat sessions
+    *   Prevented React warnings about duplicate keys in message rendering
+*   **Logo Sizing Improvements**:
+    *   Further reduced logo sizes for better visual balance
+    *   Navigation: 16px, Homepage: 24px, Builder: 24px, Footer: 16px
+    *   Ensured consistent sizing across all components

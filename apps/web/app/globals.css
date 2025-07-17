@@ -1,54 +1,83 @@
-/* Enhanced Warren Brand Design System */
+/* Modern Warren Design System - Minimal & Clean */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-/* Warren Enhanced Color System */
+/* Modern Color System */
 :root {
   /* Primary Brand Colors */
   --warren-primary-dark-blue: #032E46;
   --warren-primary-dark-blue-hover: #024a6b;
   --warren-secondary-green: #6EAD7C;
   --warren-secondary-green-hover: #5a9669;
-  --warren-off-white: #F8F7F4;
-  --warren-page-background: #F6F4ED;
-  --warren-light-gray: #D9D9D9;
-  --warren-light-blue: #DAEDF0;
   
-  /* Enhanced Color Palette */
-  --warren-primary-text: #1a2332;
-  --warren-secondary-text: #6C757D;
-  --warren-placeholder-text: #999999;
-  --warren-border: #E7E7EF;
-  --warren-border-hover: #D1D1DB;
-  --warren-header-blue-gray: #DDE2E7;
+  /* Modern Neutral Palette */
+  --warren-white: #ffffff;
+  --warren-gray-50: #fafafa;
+  --warren-gray-100: #f5f5f5;
+  --warren-gray-200: #e5e5e5;
+  --warren-gray-300: #d4d4d4;
+  --warren-gray-400: #a3a3a3;
+  --warren-gray-500: #737373;
+  --warren-gray-600: #525252;
+  --warren-gray-700: #404040;
+  --warren-gray-800: #262626;
+  --warren-gray-900: #171717;
+  
+  /* Background Colors */
+  --warren-page-background: #fafafa;
+  --warren-card-background: #ffffff;
+  --warren-surface-hover: #f5f5f5;
+  
+  /* Text Colors */
+  --warren-primary-text: #171717;
+  --warren-secondary-text: #737373;
+  --warren-tertiary-text: #a3a3a3;
+  --warren-placeholder-text: #d4d4d4;
+  
+  /* Border Colors */
+  --warren-border: #e5e5e5;
+  --warren-border-hover: #d4d4d4;
+  --warren-border-focus: #032E46;
+  
+  /* State Colors */
   --warren-success: #22c55e;
   --warren-warning: #f59e0b;
   --warren-error: #ef4444;
   
-  /* Shadows and Effects */
-  --warren-shadow-sm: 0 2px 8px rgba(3, 46, 70, 0.08);
-  --warren-shadow-md: 0 4px 16px rgba(3, 46, 70, 0.12);
-  --warren-shadow-lg: 0 8px 32px rgba(3, 46, 70, 0.16);
-  --warren-shadow-xl: 0 16px 48px rgba(3, 46, 70, 0.20);
+  /* Modern Shadows */
+  --warren-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --warren-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --warren-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --warren-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --warren-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
   
   /* Gradients */
   --warren-gradient-primary: linear-gradient(135deg, #032E46 0%, #024a6b 100%);
   --warren-gradient-secondary: linear-gradient(135deg, #6EAD7C 0%, #5a9669 100%);
-  --warren-gradient-light: linear-gradient(135deg, #F8F7F4 0%, #F6F4ED 100%);
-  --warren-gradient-card: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  --warren-gradient-subtle: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
   
   /* Border Radius */
-  --warren-radius-sm: 6px;
+  --warren-radius-xs: 4px;
+  --warren-radius-sm: 8px;
   --warren-radius-md: 12px;
   --warren-radius-lg: 16px;
   --warren-radius-xl: 24px;
   --warren-radius-full: 9999px;
   
+  /* Spacing System */
+  --warren-space-xs: 4px;
+  --warren-space-sm: 8px;
+  --warren-space-md: 16px;
+  --warren-space-lg: 24px;
+  --warren-space-xl: 32px;
+  --warren-space-2xl: 48px;
+  --warren-space-3xl: 64px;
+  
   /* Transitions */
-  --warren-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --warren-transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --warren-transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --warren-transition-slow: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Enhanced Typography */
+/* Modern Typography */
 * {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
@@ -63,58 +92,62 @@ body {
   color: var(--warren-primary-text) !important;
   background: var(--warren-page-background) !important;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
 }
 
-/* Enhanced Typography Classes */
+/* Modern Typography Classes */
 .warren-hero-title {
-  font-size: clamp(36px, 5vw, 56px) !important;
-  font-weight: 800 !important;
+  font-size: clamp(32px, 4vw, 48px) !important;
+  font-weight: 700 !important;
   line-height: 1.1 !important;
   color: var(--warren-primary-dark-blue) !important;
-  letter-spacing: -0.02em !important;
-  margin-bottom: 1.5rem !important;
+  letter-spacing: -0.025em !important;
+  margin: 0 !important;
 }
 
 .warren-section-header {
-  font-size: clamp(20px, 3vw, 28px) !important;
-  font-weight: 700 !important;
+  font-size: clamp(20px, 2.5vw, 28px) !important;
+  font-weight: 600 !important;
   color: var(--warren-primary-dark-blue) !important;
-  margin-bottom: 1rem !important;
+  margin: 0 !important;
   line-height: 1.3 !important;
-  letter-spacing: -0.01em !important;
+  letter-spacing: -0.015em !important;
 }
 
 .warren-body-text {
   font-size: 16px !important;
   font-weight: 400 !important;
   color: var(--warren-primary-text) !important;
-  line-height: 1.6 !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
 }
 
 .warren-body-text-large {
   font-size: 18px !important;
   font-weight: 400 !important;
   color: var(--warren-primary-text) !important;
-  line-height: 1.6 !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
 }
 
 .warren-secondary-text {
   color: var(--warren-secondary-text) !important;
   font-size: 14px !important;
-  line-height: 1.5 !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
 }
 
-/* Enhanced Button System */
+/* Modern Button System */
 .warren-btn-primary {
   background: var(--warren-gradient-primary) !important;
   color: white !important;
-  padding: 14px 32px !important;
-  border-radius: var(--warren-radius-full) !important;
-  font-weight: 600 !important;
-  font-size: 16px !important;
+  padding: 12px 24px !important;
+  border-radius: var(--warren-radius-md) !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
   border: none !important;
   cursor: pointer !important;
   transition: var(--warren-transition) !important;
@@ -125,12 +158,11 @@ body {
   gap: 8px !important;
   text-align: center !important;
   box-shadow: var(--warren-shadow-sm) !important;
-  position: relative !important;
-  overflow: hidden !important;
+  min-height: 40px !important;
 }
 
 .warren-btn-primary:hover {
-  transform: translateY(-2px) !important;
+  transform: translateY(-1px) !important;
   box-shadow: var(--warren-shadow-md) !important;
   background: var(--warren-primary-dark-blue-hover) !important;
 }
@@ -140,14 +172,21 @@ body {
   box-shadow: var(--warren-shadow-sm) !important;
 }
 
+.warren-btn-primary:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: var(--warren-shadow-xs) !important;
+}
+
 .warren-btn-secondary {
-  background: white !important;
-  color: var(--warren-primary-dark-blue) !important;
-  padding: 14px 32px !important;
-  border-radius: var(--warren-radius-full) !important;
-  font-weight: 600 !important;
-  font-size: 16px !important;
-  border: 2px solid var(--warren-border) !important;
+  background: var(--warren-white) !important;
+  color: var(--warren-primary-text) !important;
+  padding: 12px 24px !important;
+  border-radius: var(--warren-radius-md) !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  border: 1px solid var(--warren-border) !important;
   cursor: pointer !important;
   transition: var(--warren-transition) !important;
   text-decoration: none !important;
@@ -156,23 +195,31 @@ body {
   justify-content: center !important;
   gap: 8px !important;
   text-align: center !important;
-  box-shadow: var(--warren-shadow-sm) !important;
+  box-shadow: var(--warren-shadow-xs) !important;
+  min-height: 40px !important;
 }
 
 .warren-btn-secondary:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: var(--warren-shadow-md) !important;
-  border-color: var(--warren-primary-dark-blue) !important;
-  background: var(--warren-off-white) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: var(--warren-shadow-sm) !important;
+  border-color: var(--warren-border-hover) !important;
+  background: var(--warren-surface-hover) !important;
+}
+
+.warren-btn-secondary:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: var(--warren-shadow-xs) !important;
 }
 
 .warren-btn-success {
   background: var(--warren-gradient-secondary) !important;
   color: white !important;
-  padding: 14px 32px !important;
-  border-radius: var(--warren-radius-full) !important;
-  font-weight: 600 !important;
-  font-size: 16px !important;
+  padding: 12px 24px !important;
+  border-radius: var(--warren-radius-md) !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
   border: none !important;
   cursor: pointer !important;
   transition: var(--warren-transition) !important;
@@ -183,65 +230,61 @@ body {
   gap: 8px !important;
   text-align: center !important;
   box-shadow: var(--warren-shadow-sm) !important;
+  min-height: 40px !important;
 }
 
 .warren-btn-success:hover {
-  transform: translateY(-2px) !important;
+  transform: translateY(-1px) !important;
   box-shadow: var(--warren-shadow-md) !important;
   background: var(--warren-secondary-green-hover) !important;
 }
 
-/* Enhanced Card System */
+/* Modern Card System */
 .warren-card {
-  background: var(--warren-gradient-card) !important;
+  background: var(--warren-card-background) !important;
   border-radius: var(--warren-radius-lg) !important;
   box-shadow: var(--warren-shadow-sm) !important;
   border: 1px solid var(--warren-border) !important;
-  padding: 24px !important;
-  margin-bottom: 16px !important;
+  padding: var(--warren-space-lg) !important;
   transition: var(--warren-transition) !important;
   position: relative !important;
-  overflow: hidden !important;
 }
 
 .warren-card:hover {
   box-shadow: var(--warren-shadow-md) !important;
-  transform: translateY(-2px) !important;
+  transform: translateY(-1px) !important;
   border-color: var(--warren-border-hover) !important;
 }
 
 .warren-card-large {
-  background: var(--warren-gradient-card) !important;
+  background: var(--warren-card-background) !important;
   border-radius: var(--warren-radius-xl) !important;
   box-shadow: var(--warren-shadow-md) !important;
   border: 1px solid var(--warren-border) !important;
-  padding: 32px !important;
-  margin-bottom: 24px !important;
+  padding: var(--warren-space-xl) !important;
   transition: var(--warren-transition) !important;
   position: relative !important;
-  overflow: hidden !important;
 }
 
 .warren-card-large:hover {
   box-shadow: var(--warren-shadow-lg) !important;
-  transform: translateY(-2px) !important;
+  transform: translateY(-1px) !important;
 }
 
 .warren-card-feature {
-  background: white !important;
+  background: var(--warren-white) !important;
   border-radius: var(--warren-radius-lg) !important;
   box-shadow: var(--warren-shadow-sm) !important;
   border: 1px solid var(--warren-border) !important;
-  padding: 32px !important;
+  padding: var(--warren-space-xl) !important;
   text-align: center !important;
   transition: var(--warren-transition) !important;
   position: relative !important;
-  overflow: hidden !important;
 }
 
 .warren-card-feature:hover {
   box-shadow: var(--warren-shadow-lg) !important;
-  transform: translateY(-4px) !important;
+  transform: translateY(-2px) !important;
   border-color: var(--warren-secondary-green) !important;
 }
 
@@ -251,36 +294,36 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 3px;
   background: var(--warren-gradient-secondary);
   transform: scaleX(0);
   transition: var(--warren-transition);
+  border-radius: var(--warren-radius-lg) var(--warren-radius-lg) 0 0;
 }
 
 .warren-card-feature:hover::before {
   transform: scaleX(1);
 }
 
-/* Enhanced Input System */
+/* Modern Input System */
 .warren-input {
-  background-color: white !important;
-  border: 2px solid var(--warren-border) !important;
+  background-color: var(--warren-white) !important;
+  border: 1px solid var(--warren-border) !important;
   border-radius: var(--warren-radius-md) !important;
-  height: 56px !important;
-  padding: 16px 20px !important;
-  font-size: 16px !important;
-  font-weight: 500 !important;
+  height: 44px !important;
+  padding: 12px 16px !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
   width: 100% !important;
   outline: none !important;
   transition: var(--warren-transition) !important;
   color: var(--warren-primary-text) !important;
-  box-shadow: var(--warren-shadow-sm) !important;
+  box-shadow: var(--warren-shadow-xs) !important;
 }
 
 .warren-input:focus {
-  border-color: var(--warren-primary-dark-blue) !important;
-  box-shadow: 0 0 0 4px rgba(3, 46, 70, 0.1) !important;
-  transform: translateY(-1px) !important;
+  border-color: var(--warren-border-focus) !important;
+  box-shadow: 0 0 0 3px rgba(3, 46, 70, 0.1) !important;
 }
 
 .warren-input::placeholder {
@@ -289,42 +332,41 @@ body {
 }
 
 .warren-textarea {
-  background-color: white !important;
-  border: 2px solid var(--warren-border) !important;
+  background-color: var(--warren-white) !important;
+  border: 1px solid var(--warren-border) !important;
   border-radius: var(--warren-radius-md) !important;
-  padding: 16px 20px !important;
-  font-size: 16px !important;
-  font-weight: 500 !important;
+  padding: 12px 16px !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
   width: 100% !important;
   outline: none !important;
   resize: vertical !important;
-  min-height: 120px !important;
+  min-height: 100px !important;
   transition: var(--warren-transition) !important;
   color: var(--warren-primary-text) !important;
-  box-shadow: var(--warren-shadow-sm) !important;
+  box-shadow: var(--warren-shadow-xs) !important;
   font-family: inherit !important;
-  line-height: 1.6 !important;
+  line-height: 1.5 !important;
 }
 
 .warren-textarea:focus {
-  border-color: var(--warren-primary-dark-blue) !important;
-  box-shadow: 0 0 0 4px rgba(3, 46, 70, 0.1) !important;
-  transform: translateY(-1px) !important;
+  border-color: var(--warren-border-focus) !important;
+  box-shadow: 0 0 0 3px rgba(3, 46, 70, 0.1) !important;
 }
 
-/* Enhanced Layout Components */
+/* Modern Layout Components */
 .warren-main-content {
   background: var(--warren-page-background) !important;
   min-height: 100vh !important;
-  padding: 32px !important;
+  padding: var(--warren-space-lg) !important;
 }
 
 .warren-hero-section {
-  background: var(--warren-gradient-light) !important;
-  padding: 80px 0 !important;
+  background: var(--warren-gradient-subtle) !important;
+  padding: var(--warren-space-3xl) 0 !important;
   text-align: center !important;
   position: relative !important;
-  overflow: hidden !important;
+  border-bottom: 1px solid var(--warren-border) !important;
 }
 
 .warren-hero-section::before {
@@ -334,7 +376,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23032E46' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23032E46' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
   z-index: 0 !important;
 }
 
@@ -343,10 +385,10 @@ body {
   z-index: 1 !important;
 }
 
-/* Enhanced Navigation */
+/* Modern Navigation */
 .warren-nav {
   background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(12px) !important;
   border-bottom: 1px solid var(--warren-border) !important;
   position: sticky !important;
   top: 0 !important;
@@ -355,57 +397,60 @@ body {
 }
 
 .warren-nav-link {
-  color: var(--warren-primary-text) !important;
+  color: var(--warren-secondary-text) !important;
   font-weight: 500 !important;
   padding: 8px 16px !important;
   border-radius: var(--warren-radius-md) !important;
   transition: var(--warren-transition) !important;
   text-decoration: none !important;
+  font-size: 14px !important;
 }
 
 .warren-nav-link:hover {
-  background: var(--warren-light-blue) !important;
-  color: var(--warren-primary-dark-blue) !important;
-  transform: translateY(-1px) !important;
+  background: var(--warren-surface-hover) !important;
+  color: var(--warren-primary-text) !important;
 }
 
-/* Enhanced Success States */
+/* Modern State Messages */
 .warren-success {
   color: var(--warren-success) !important;
-  background: rgba(34, 197, 94, 0.1) !important;
-  border: 1px solid var(--warren-success) !important;
+  background: rgba(34, 197, 94, 0.05) !important;
+  border: 1px solid rgba(34, 197, 94, 0.2) !important;
   border-radius: var(--warren-radius-md) !important;
-  padding: 16px 20px !important;
+  padding: var(--warren-space-md) !important;
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: var(--warren-space-sm) !important;
+  font-size: 14px !important;
 }
 
 .warren-warning {
   color: var(--warren-warning) !important;
-  background: rgba(245, 158, 11, 0.1) !important;
-  border: 1px solid var(--warren-warning) !important;
+  background: rgba(245, 158, 11, 0.05) !important;
+  border: 1px solid rgba(245, 158, 11, 0.2) !important;
   border-radius: var(--warren-radius-md) !important;
-  padding: 16px 20px !important;
+  padding: var(--warren-space-md) !important;
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: var(--warren-space-sm) !important;
+  font-size: 14px !important;
 }
 
 .warren-error {
   color: var(--warren-error) !important;
-  background: rgba(239, 68, 68, 0.1) !important;
-  border: 1px solid var(--warren-error) !important;
+  background: rgba(239, 68, 68, 0.05) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
   border-radius: var(--warren-radius-md) !important;
-  padding: 16px 20px !important;
+  padding: var(--warren-space-md) !important;
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: var(--warren-space-sm) !important;
+  font-size: 14px !important;
 }
 
-/* Enhanced Chat Interface */
+/* Modern Chat Interface */
 .warren-chat-container {
-  background: white !important;
+  background: var(--warren-white) !important;
   border-radius: var(--warren-radius-xl) !important;
   box-shadow: var(--warren-shadow-lg) !important;
   border: 1px solid var(--warren-border) !important;
@@ -418,45 +463,48 @@ body {
 .warren-chat-header {
   background: var(--warren-gradient-primary) !important;
   color: white !important;
-  padding: 20px 24px !important;
+  padding: var(--warren-space-md) var(--warren-space-lg) !important;
   text-align: center !important;
+  font-weight: 500 !important;
 }
 
 .warren-chat-messages {
   flex: 1 !important;
   overflow-y: auto !important;
-  padding: 20px !important;
-  background: var(--warren-off-white) !important;
+  padding: var(--warren-space-lg) !important;
+  background: var(--warren-gray-50) !important;
 }
 
 .warren-chat-input-area {
-  background: white !important;
+  background: var(--warren-white) !important;
   border-top: 1px solid var(--warren-border) !important;
-  padding: 20px !important;
+  padding: var(--warren-space-lg) !important;
 }
 
 .warren-message-bot {
-  background: white !important;
+  background: var(--warren-white) !important;
   color: var(--warren-primary-text) !important;
-  border-radius: 20px 20px 20px 4px !important;
-  padding: 16px 20px !important;
-  margin-bottom: 12px !important;
-  box-shadow: var(--warren-shadow-sm) !important;
+  border-radius: 18px 18px 18px 4px !important;
+  padding: 12px 16px !important;
+  margin-bottom: 8px !important;
+  box-shadow: var(--warren-shadow-xs) !important;
   border: 1px solid var(--warren-border) !important;
   max-width: 80% !important;
-  animation: slideInLeft 0.3s ease-out !important;
+  animation: slideInLeft 0.2s ease-out !important;
+  font-size: 14px !important;
 }
 
 .warren-message-user {
   background: var(--warren-gradient-primary) !important;
   color: white !important;
-  border-radius: 20px 20px 4px 20px !important;
-  padding: 16px 20px !important;
-  margin-bottom: 12px !important;
+  border-radius: 18px 18px 4px 18px !important;
+  padding: 12px 16px !important;
+  margin-bottom: 8px !important;
   margin-left: auto !important;
-  box-shadow: var(--warren-shadow-sm) !important;
+  box-shadow: var(--warren-shadow-xs) !important;
   max-width: 80% !important;
-  animation: slideInRight 0.3s ease-out !important;
+  animation: slideInRight 0.2s ease-out !important;
+  font-size: 14px !important;
 }
 
 /* Animations */
@@ -498,28 +546,35 @@ body {
   }
 }
 
-/* Enhanced Responsive Design */
+/* Modern Responsive Design */
 @media (max-width: 768px) {
   .warren-main-content {
-    padding: 16px !important;
+    padding: var(--warren-space-md) !important;
   }
   
   .warren-hero-section {
-    padding: 40px 0 !important;
+    padding: var(--warren-space-2xl) 0 !important;
   }
   
   .warren-card, .warren-card-large {
-    margin-bottom: 16px !important;
-    padding: 20px !important;
+    padding: var(--warren-space-md) !important;
   }
   
   .warren-btn-primary, .warren-btn-secondary, .warren-btn-success {
-    padding: 12px 24px !important;
+    padding: 10px 20px !important;
     font-size: 14px !important;
   }
   
   .warren-chat-container {
     height: 400px !important;
+  }
+  
+  .warren-hero-title {
+    font-size: clamp(28px, 8vw, 36px) !important;
+  }
+  
+  .warren-section-header {
+    font-size: clamp(18px, 6vw, 24px) !important;
   }
 }
 
