@@ -90,3 +90,8 @@ The turborepo has been setup.
 *   Added a column alias map and enhanced `findKey` logic in `builder/page.tsx` to recognize common spreadsheet header variations.
 *   Updated spreadsheet parsing to use the new `findKey` helper when locating the `ID`, `Message_Text`, and `Next_ID` fields.
 *   Uploading the provided "N _ GHAC Donor Survey V4 - Conversational Script.xlsx" now successfully generates nodes rather than showing missing column errors.
+
+**July 17, 2025 - Codex**
+
+*   Moved navigation markup into new `NavBar` client component to avoid server component event handler error.
+*   Updated `layout.tsx` to include `NavBar` and keep metadata export.
