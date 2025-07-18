@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link";
-import NavBar from "./components/NavBar";
+import Sidebar from "./components/Sidebar";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -14,8 +14,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Warren - Your Gateway to Student Voice Insights",
-  description: "Educational survey platform for gathering student feedback through conversational burrows",
+  title: "Survey Creator - Student Voice Platform",
+  description: "Create engaging conversational surveys for gathering meaningful student feedback",
 };
 
 export default function RootLayout({
@@ -26,49 +26,42 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {/* Enhanced Navigation */}
-        <NavBar />
+        <div className="flex min-h-screen bg-gray-50">
+          {/* Sidebar Navigation */}
+          <Sidebar />
 
-        {/* Main Content */}
-        <main>
-          {children}
-        </main>
+          {/* Main Content */}
+          <div className="flex-1 md:ml-64">
+            <main className="min-h-screen">
+              {children}
+            </main>
 
-        {/* Minimal Footer */}
-        <footer className="border-t mt-16" style={{ borderColor: 'var(--warren-border)', background: 'var(--warren-page-background)' }}>
-          <div className="container mx-auto px-4 py-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-4">
-                  <img 
-                    src="/NesolagusLogo.png" 
-                    alt="Nesolagus Logo" 
-                    className="w-4 h-4 object-contain"
-                    style={{ width: '16px', height: '16px' }}
-                  />
+            {/* Minimal Footer */}
+            <footer className="border-t mt-16 bg-white">
+              <div className="container mx-auto px-4 py-6">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm text-gray-600">
+                      © 2025 Warren by Nesolagus
+                    </span>
+                  </div>
+                  
+                  <div className="flex gap-6">
+                    <Link href="/privacy" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                      Privacy
+                    </Link>
+                    <Link href="/terms" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                      Terms
+                    </Link>
+                    <Link href="/docs" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                      Documentation
+                    </Link>
+                  </div>
                 </div>
-                <span className="warren-body-text font-semibold" style={{ color: 'var(--warren-primary-dark-blue)' }}>
-                  Warren
-                </span>
-                <span className="warren-secondary-text text-sm">
-                  powered by Nesolagus
-                </span>
               </div>
-              
-              <div className="flex gap-6">
-                <Link href="/privacy" className="warren-secondary-text text-sm hover:text-blue-600 transition-colors">
-                  Privacy
-                </Link>
-                <Link href="/terms" className="warren-secondary-text text-sm hover:text-blue-600 transition-colors">
-                  Terms
-                </Link>
-                <Link href="/docs" className="warren-secondary-text text-sm hover:text-blue-600 transition-colors">
-                  Docs
-                </Link>
-              </div>
-            </div>
+            </footer>
           </div>
-        </footer>
+        </div>
       </body>
     </html>
   );

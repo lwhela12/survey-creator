@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import StyleEditor from '../components/StyleEditor';
+import { Save, Download } from 'lucide-react';
 
 const StylePage = () => {
   const [surveyId, setSurveyId] = useState('mock-survey-id');
@@ -62,23 +63,25 @@ const StylePage = () => {
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="warren-hero-title mb-2">Warren Style</h1>
+            <h1 className="warren-hero-title mb-2">Style Editor</h1>
             <p className="warren-body-text" style={{ color: 'var(--warren-secondary-text)' }}>
-              Customize your burrow's appearance to match your institution's brand and personality.
+              Customize your survey's appearance to match your institution's brand.
             </p>
           </div>
           <div className="flex gap-2">
             <button
               onClick={handleLoadStyle}
-              className="warren-btn-secondary"
+              className="warren-btn-secondary flex items-center gap-2"
             >
-              Load Warren Style
+              <Download className="w-4 h-4" />
+              Load Style
             </button>
             <button
               onClick={handleSaveStyle}
-              className="warren-btn-primary"
+              className="warren-btn-primary flex items-center gap-2"
             >
-              Save Warren Style
+              <Save className="w-4 h-4" />
+              Save Style
             </button>
           </div>
         </div>

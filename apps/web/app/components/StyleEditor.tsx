@@ -284,12 +284,14 @@ const StyleEditor: React.FC<StyleEditorProps> = ({
       </div>
 
       {/* Live Preview Panel */}
-      <div className="warren-card-large">
+      <div className="warren-card-large flex flex-col h-full">
         <h2 className="warren-section-header mb-4">Live Warren Preview</h2>
-        <ChatClient
-          surveyId={surveyId}
-          styleConfig={styleConfig}
-        />
+        <div className="flex-1">
+          <ChatClient
+            surveyId={surveyId}
+            styleConfig={styleConfig}
+          />
+        </div>
       </div>
     </div>
   );

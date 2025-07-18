@@ -1,30 +1,28 @@
 'use client';
 import Link from "next/link";
+import { Hammer, Palette, BarChart3, Check, Star, Gamepad2, MessageCircle } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen" style={{ background: 'var(--warren-page-background)' }}>
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="warren-hero-section">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {/* Nesolagus Logo */}
             <div className="mb-8 flex justify-center">
-              <div className="w-6 h-6 transition-all duration-300 hover:scale-105">
-                <img 
-                  src="/NesolagusLogo.png" 
-                  alt="Nesolagus Logo" 
-                  className="w-6 h-6 object-contain"
-                  style={{ width: '24px', height: '24px' }}
-                />
-              </div>
+              <img 
+                src="/NesolagusLogo.png" 
+                alt="Nesolagus Logo" 
+                className="w-6 h-6 object-contain transition-all duration-300 hover:scale-105"
+              />
             </div>
             
             <h1 className="warren-hero-title text-center mb-6">
               Warren
             </h1>
             
-            <p className="warren-body-text-large text-center mb-8 max-w-2xl mx-auto" style={{ color: 'var(--warren-secondary-text)' }}>
+            <p className="text-lg text-center mb-8 max-w-2xl mx-auto text-gray-600">
               Transform traditional surveys into engaging conversational experiences. 
               Powered by Nesolagus, Warren helps educators create meaningful student feedback systems.
             </p>
@@ -74,8 +72,8 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="warren-card-feature">
               <div className="mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center text-xl mx-auto mb-4">
-                  🏗️
+                <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Hammer className="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 className="warren-section-header text-lg mb-3">Easy to Build</h3>
                 <p className="warren-body-text text-sm" style={{ color: 'var(--warren-secondary-text)' }}>
@@ -87,8 +85,8 @@ export default function Home() {
             
             <div className="warren-card-feature">
               <div className="mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center text-xl mx-auto mb-4">
-                  🎨
+                <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Palette className="w-6 h-6 text-green-600" />
                 </div>
                 <h3 className="warren-section-header text-lg mb-3">Fully Customizable</h3>
                 <p className="warren-body-text text-sm" style={{ color: 'var(--warren-secondary-text)' }}>
@@ -99,8 +97,8 @@ export default function Home() {
             
             <div className="warren-card-feature">
               <div className="mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center text-xl mx-auto mb-4">
-                  📊
+                <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <BarChart3 className="w-6 h-6 text-purple-600" />
                 </div>
                 <h3 className="warren-section-header text-lg mb-3">Actionable Insights</h3>
                 <p className="warren-body-text text-sm" style={{ color: 'var(--warren-secondary-text)' }}>
@@ -170,8 +168,8 @@ export default function Home() {
             <h3 className="warren-section-header mb-6">Why Educators Choose Warren</h3>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 flex-shrink-0 mt-1">
-                  ✓
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <Check className="w-4 h-4 text-green-600" />
                 </div>
                 <div>
                   <h4 className="warren-body-text font-semibold mb-1">Higher Response Rates</h4>
@@ -180,8 +178,8 @@ export default function Home() {
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 flex-shrink-0 mt-1">
-                  ✓
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <Check className="w-4 h-4 text-green-600" />
                 </div>
                 <div>
                   <h4 className="warren-body-text font-semibold mb-1">Deeper Insights</h4>
@@ -190,8 +188,8 @@ export default function Home() {
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 flex-shrink-0 mt-1">
-                  ✓
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <Check className="w-4 h-4 text-green-600" />
                 </div>
                 <div>
                   <h4 className="warren-body-text font-semibold mb-1">Easy Setup</h4>
@@ -200,8 +198,8 @@ export default function Home() {
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 flex-shrink-0 mt-1">
-                  ✓
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <Check className="w-4 h-4 text-green-600" />
                 </div>
                 <div>
                   <h4 className="warren-body-text font-semibold mb-1">Privacy First</h4>
@@ -219,14 +217,14 @@ export default function Home() {
             <div className="warren-chat-container">
               <div className="warren-chat-header">
                 <div className="flex items-center justify-center gap-2">
-                  <span className="text-xl">🐰</span>
+                  <MessageCircle className="w-5 h-5 text-gray-700" />
                   <span className="font-semibold">Warren</span>
                 </div>
               </div>
               
               <div className="warren-chat-messages">
                 <div className="warren-message-bot">
-                  <p>Hi there! I'm Warren, and I'm excited to learn about your experience this semester. This will only take a few minutes. Ready to start? 🐰</p>
+                  <p>Hi there! I'm Warren, and I'm excited to learn about your experience this semester. This will only take a few minutes. Ready to start?</p>
                 </div>
                 
                 <div className="warren-message-user">
@@ -257,8 +255,8 @@ export default function Home() {
             </div>
             
             <div className="mt-6 text-center">
-              <Link href="/survey/demo" className="warren-btn-secondary">
-                <span>🎮</span>
+              <Link href="/survey/demo" className="warren-btn-secondary flex items-center justify-center gap-2">
+                <Gamepad2 className="w-4 h-4" />
                 Try Interactive Demo
               </Link>
             </div>
@@ -273,7 +271,13 @@ export default function Home() {
             <div className="p-6 bg-white rounded-lg border border-gray-100">
               <div className="mb-4">
                 <div className="flex justify-center mb-2">
-                  <span className="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                  <div className="flex justify-center gap-1">
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                  </div>
                 </div>
                 <p className="warren-body-text text-sm italic mb-4">
                   "Warren transformed how we collect student feedback. Our response rates went from 30% to 85%!"
@@ -288,7 +292,13 @@ export default function Home() {
             <div className="p-6 bg-white rounded-lg border border-gray-100">
               <div className="mb-4">
                 <div className="flex justify-center mb-2">
-                  <span className="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                  <div className="flex justify-center gap-1">
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                  </div>
                 </div>
                 <p className="warren-body-text text-sm italic mb-4">
                   "Students actually enjoy giving feedback now. The conversational approach feels more personal."
@@ -303,7 +313,13 @@ export default function Home() {
             <div className="p-6 bg-white rounded-lg border border-gray-100">
               <div className="mb-4">
                 <div className="flex justify-center mb-2">
-                  <span className="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                  <div className="flex justify-center gap-1">
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                  </div>
                 </div>
                 <p className="warren-body-text text-sm italic mb-4">
                   "Setup was incredibly easy. We had our first Warren survey running in under 10 minutes."

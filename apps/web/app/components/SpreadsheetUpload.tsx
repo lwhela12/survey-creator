@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
+import { Upload, Lightbulb } from 'lucide-react';
 
 const SpreadsheetUpload = ({ onUpload }: { onUpload: (data: any[]) => void }) => {
   const [uploading, setUploading] = useState(false);
@@ -37,12 +38,15 @@ const SpreadsheetUpload = ({ onUpload }: { onUpload: (data: any[]) => void }) =>
     <div>
       <h3 className="warren-section-header mb-4">Upload Your Survey Script</h3>
       <p className="warren-body-text mb-4" style={{ color: 'var(--warren-secondary-text)' }}>
-        Upload a CSV or Excel file containing your survey questions. Warren will transform it into an interactive burrow.
+        Upload a CSV or Excel file containing your survey questions. Warren will transform it into an interactive conversation.
       </p>
       
       <div className="flex flex-col sm:flex-row gap-4 items-start">
         <label className="warren-btn-primary cursor-pointer">
-          {uploading ? 'Digging Burrow...' : 'Choose File'}
+          <span className="flex items-center gap-2">
+            <Upload className="w-4 h-4" />
+            {uploading ? 'Processing...' : 'Choose File'}
+          </span>
           <input 
             type="file" 
             onChange={handleFileUpload} 
@@ -57,7 +61,7 @@ const SpreadsheetUpload = ({ onUpload }: { onUpload: (data: any[]) => void }) =>
             <div className="animate-spin rounded-full h-4 w-4 border-2 border-t-transparent" 
                  style={{ borderColor: 'var(--warren-primary-dark-blue)' }}></div>
             <p className="warren-body-text" style={{ color: 'var(--warren-secondary-text)' }}>
-              Warren is building your burrow...
+              Processing your survey...
             </p>
           </div>
         )}
@@ -72,7 +76,7 @@ const SpreadsheetUpload = ({ onUpload }: { onUpload: (data: any[]) => void }) =>
           <li>• <strong>Next column</strong> (optional, for branching) - accepts: Logic/Branching, Next_ID, next, goto, target</li>
         </ul>
         <p className="warren-secondary-text text-xs mt-2">
-          💡 Warren is flexible with column names - if upload fails, check the browser console for available columns.
+          <Lightbulb className="w-3 h-3 inline-block mr-1" />Warren is flexible with column names - if upload fails, check the browser console for available columns.
         </p>
       </div>
     </div>

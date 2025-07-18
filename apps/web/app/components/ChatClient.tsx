@@ -37,16 +37,17 @@ const ChatClient: React.FC<ChatClientProps> = ({
   const [isTyping, setIsTyping] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isComplete, setIsComplete] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageIdCounter = useRef<number>(0);
 
   const defaultStyle = {
-    botMessageBg: '#ECEFF1',
-    userMessageBg: '#007AFF',
-    botMessageText: '#000000',
+    botMessageBg: '#F1F5F9',
+    userMessageBg: '#032E46',
+    botMessageText: '#1E293B',
     userMessageText: '#FFFFFF',
     chatBackground: '#FFFFFF',
-    messageDelay: 1200,
+    messageDelay: 800,
     ...styleConfig
   };
 
@@ -68,7 +69,11 @@ const ChatClient: React.FC<ChatClientProps> = ({
       if (response.ok) {
         const data = await response.json();
         setSurveyNodes(data.nodes);
-        processNextMessage('1', data.nodes);
+        // Only start the first message if not already initialized
+        if (!isInitialized) {
+          setIsInitialized(true);
+          processNextMessage('1', data.nodes);
+        }
       }
     } catch (error) {
       console.error('Error loading survey data:', error);
@@ -117,12 +122,21 @@ const ChatClient: React.FC<ChatClientProps> = ({
 
     // Determine next node
     const currentNode = surveyNodes[nodeId];
-    let nextNodeId = currentNode.nextId;
+    let nextNodeId = currentNode.nextId; // Default fallback
 
-    // Handle branching logic for single_choice
+    // Branching Logic
     if (currentNode.questionType === 'single_choice' && currentNode.nextLogic) {
-      nextNodeId = currentNode.nextLogic[answer] || currentNode.nextId;
+      if (currentNode.nextLogic[answer]) {
+        // Path for a specific answer
+        nextNodeId = currentNode.nextLogic[answer];
+      } else if (currentNode.nextLogic.default) {
+        // Fallback to a default path
+        nextNodeId = currentNode.nextLogic.default;
+      }
+      // If no specific path and no default, use the original nextId
     }
+
+    console.log(`Branching from node ${nodeId} with answer "${answer}" to node ${nextNodeId}`);
 
     if (nextNodeId) {
       setCurrentNodeId(nextNodeId);
@@ -157,36 +171,46 @@ const ChatClient: React.FC<ChatClientProps> = ({
     switch (currentNode.questionType) {
       case 'statement':
         return (
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={() => handleUserResponse(currentNodeId, 'continue')}
-          >
-            Continue
-          </button>
+        <button
+          className="btn btn-primary w-full text-lg py-3 rounded-full"
+          onClick={() => handleUserResponse(currentNodeId, 'continue')}
+        >
+          Continue
+        </button>
         );
 
       case 'text':
         return (
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className="flex-1 p-2 border rounded"
-              placeholder="Type your answer..."
-              onKeyPress={(e) => {
-                if (e.key === 'Enter' && inputValue.trim()) {
-                  handleUserResponse(currentNodeId, inputValue.trim());
-                }
-              }}
-            />
+          <div className="flex gap-6 items-end">
+            <div className="flex-1">
+              <textarea
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                className="w-full px-4 py-3 border border-border rounded-full bg-[#DAEDF0] focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 resize-none text-base min-h-[54px] shadow-sm"
+                placeholder="Type your message..."
+                rows={1}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey && inputValue.trim()) {
+                    e.preventDefault();
+                    handleUserResponse(currentNodeId, inputValue.trim());
+                  }
+                }}
+                style={{ 
+                  height: 'auto',
+                  minHeight: '70px',
+                  maxHeight: '140px'
+                }}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = 'auto';
+                  target.style.height = Math.min(target.scrollHeight, 140) + 'px';
+                }}
+              />
+            </div>
             <button
-              onClick={() => {
-                if (inputValue.trim()) {
-                  handleUserResponse(currentNodeId, inputValue.trim());
-                }
-              }}
-              className="bg-blue-500 text-white px-4 py-2 rounded"
+              onClick={() => inputValue.trim() && handleUserResponse(currentNodeId, inputValue.trim())}
+              disabled={!inputValue.trim()}
+              className="btn btn-primary px-6 py-3 rounded-full disabled:opacity-50 text-lg font-medium shadow transition-all duration-300"
             >
               Send
             </button>
@@ -195,26 +219,25 @@ const ChatClient: React.FC<ChatClientProps> = ({
 
       case 'number':
         return (
-          <div className="flex gap-2">
-            <input
-              type="number"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className="flex-1 p-2 border rounded"
-              placeholder="Enter a number..."
-              onKeyPress={(e) => {
-                if (e.key === 'Enter' && inputValue.trim()) {
-                  handleUserResponse(currentNodeId, parseFloat(inputValue));
-                }
-              }}
-            />
+          <div className="flex gap-6 items-end">
+            <div className="flex-1">
+              <input
+                type="number"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                className="w-full px-4 py-3 border border-border rounded-full bg-[#DAEDF0] focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base shadow-sm"
+                placeholder="Enter a number..."
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && inputValue.trim()) {
+                    handleUserResponse(currentNodeId, parseFloat(inputValue));
+                  }
+                }}
+              />
+            </div>
             <button
-              onClick={() => {
-                if (inputValue.trim()) {
-                  handleUserResponse(currentNodeId, parseFloat(inputValue));
-                }
-              }}
-              className="bg-blue-500 text-white px-4 py-2 rounded"
+              onClick={() => inputValue.trim() && handleUserResponse(currentNodeId, parseFloat(inputValue))}
+              disabled={!inputValue.trim()}
+              className="btn btn-primary px-6 py-3 rounded-full disabled:opacity-50 text-lg font-medium shadow transition-all duration-300"
             >
               Send
             </button>
@@ -223,12 +246,12 @@ const ChatClient: React.FC<ChatClientProps> = ({
 
       case 'single_choice':
         return (
-          <div className="flex flex-col gap-2">
+          <div className="space-y-4">
             {currentNode.options?.map((option: string, index: number) => (
               <button
                 key={index}
                 onClick={() => handleUserResponse(currentNodeId, option)}
-                className="bg-gray-200 hover:bg-gray-300 p-2 rounded text-left"
+                className="btn btn-primary w-full text-lg py-3 rounded-full"
               >
                 {option}
               </button>
@@ -238,28 +261,35 @@ const ChatClient: React.FC<ChatClientProps> = ({
 
       case 'multi_choice':
         return (
-          <div className="flex flex-col gap-2">
-            {currentNode.options?.map((option: string, index: number) => (
-              <label key={index} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  onChange={(e) => {
-                    const currentSelections = userResponses[currentNodeId] || [];
-                    if (e.target.checked) {
-                      const newSelections = [...currentSelections, option];
-                      setUserResponses(prev => ({ ...prev, [currentNodeId]: newSelections }));
-                    } else {
-                      const newSelections = currentSelections.filter((item: string) => item !== option);
-                      setUserResponses(prev => ({ ...prev, [currentNodeId]: newSelections }));
-                    }
-                  }}
-                />
-                {option}
-              </label>
-            ))}
+          <div className="space-y-5">
+            <div className="space-y-4">
+              {currentNode.options?.map((option: string, index: number) => (
+                <label
+                  key={index}
+                  className="flex items-center justify-between w-full p-4 border border-border rounded-lg bg-surface hover:border-primary transition-all duration-300"
+                >
+                  <span className="text-lg font-medium">{option}</span>
+                  <input
+                    type="checkbox"
+                    className="w-5 h-5 text-primary border border-border rounded focus:ring-4 focus:ring-primary/20"
+                    onChange={(e) => {
+                      const currentSelections = userResponses[currentNodeId] || [];
+                      if (e.target.checked) {
+                        const newSelections = [...currentSelections, option];
+                        setUserResponses(prev => ({ ...prev, [currentNodeId]: newSelections }));
+                      } else {
+                        const newSelections = currentSelections.filter((item: string) => item !== option);
+                        setUserResponses(prev => ({ ...prev, [currentNodeId]: newSelections }));
+                      }
+                    }}
+                  />
+                  <span className="text-lg font-medium">{option}</span>
+                </label>
+              ))}
+            </div>
             <button
               onClick={() => handleUserResponse(currentNodeId, userResponses[currentNodeId] || [])}
-              className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
+              className="btn btn-primary w-full text-lg py-3 rounded-full font-medium shadow transition-all duration-300"
             >
               Continue
             </button>
@@ -272,43 +302,55 @@ const ChatClient: React.FC<ChatClientProps> = ({
   };
 
   return (
-    <div 
-      className="flex flex-col h-96 border rounded-lg"
+    <div
+      className="flex flex-col h-full w-full rounded-xl border border-border shadow-lg overflow-hidden"
       style={{ backgroundColor: defaultStyle.chatBackground }}
     >
-      <div className="flex-1 overflow-y-auto p-4">
-        {messages.map((message) => (
+      {/* Header with optional avatar */}
+      <div className="flex items-center gap-3 px-6 py-4 bg-surface border-b border-border">
+        {defaultStyle.avatarUrl && (
+          <img
+            src={defaultStyle.avatarUrl}
+            alt="Bot Avatar"
+            className="w-8 h-8 rounded-full"
+          />
+        )}
+        <span className="text-primary font-semibold">Warren</span>
+      </div>
+      <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        {messages.map((message, index) => (
           <div
             key={message.id}
-            className={`mb-4 flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+            className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} animate-in slide-in-from-bottom-2 duration-500`}
+            style={{ animationDelay: `${index * 150}ms` }}
           >
             <div
-              className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                message.type === 'user' ? 'rounded-br-none' : 'rounded-bl-none'
+              className={`max-w-[80%] px-4 py-3 shadow-sm rounded-xl ${
+                message.type === 'user' ? 'ml-auto' : 'mr-auto'
               }`}
               style={{
                 backgroundColor: message.type === 'user' ? defaultStyle.userMessageBg : defaultStyle.botMessageBg,
                 color: message.type === 'user' ? defaultStyle.userMessageText : defaultStyle.botMessageText,
               }}
             >
-              {message.content}
+              <p className="text-base leading-relaxed font-medium">{message.content}</p>
             </div>
           </div>
         ))}
         
         {isTyping && (
-          <div className="flex justify-start mb-4">
-            <div 
-              className="px-4 py-2 rounded-lg rounded-bl-none"
+          <div className="flex justify-start animate-in slide-in-from-left-2 duration-500">
+            <div
+              className="px-4 py-3 shadow-sm rounded-xl mr-auto"
               style={{
                 backgroundColor: defaultStyle.botMessageBg,
                 color: defaultStyle.botMessageText,
               }}
             >
-              <div className="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
+              <div className="flex space-x-2">
+                <div className="w-2 h-2 bg-current rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></div>
+                <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
               </div>
             </div>
           </div>
@@ -317,10 +359,10 @@ const ChatClient: React.FC<ChatClientProps> = ({
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="border-t p-4">
+      <div className="border-t border-border bg-surface p-6">
         {isComplete ? (
-          <div className="text-center text-gray-500">
-            Thank you for completing the survey!
+          <div className="text-center text-secondary">
+            <p className="text-lg font-medium">Thank you for completing the survey!</p>
           </div>
         ) : (
           renderUserInput()

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { AlertTriangle, Plus, FolderOpen, Edit, Palette } from 'lucide-react';
 
 interface Survey {
   id: string;
@@ -54,7 +55,7 @@ const SurveyListPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center max-w-md mx-auto p-6">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <div className="text-red-500 mb-4"><AlertTriangle className="w-16 h-16 mx-auto" /></div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Error Loading Surveys</h1>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
@@ -73,31 +74,33 @@ const SurveyListPage = () => {
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="warren-hero-title mb-2">The Den</h1>
-            <p className="warren-body-text" style={{ color: 'var(--warren-secondary-text)' }}>
-              Browse your collection of conversational burrows and discover student insights.
+            <h1 className="warren-hero-title mb-2">Dashboard</h1>
+            <p className="text-gray-600">
+              Manage your surveys and view student responses.
             </p>
           </div>
           <Link
             href="/builder"
-            className="warren-btn-primary"
+            className="warren-btn-primary flex items-center gap-2"
           >
-            🐰 Dig New Burrow
+            <Plus className="w-4 h-4" />
+            Create Survey
           </Link>
         </div>
 
         {surveys.length === 0 ? (
           <div className="warren-card-large text-center py-12">
-            <div style={{ color: 'var(--warren-secondary-green)' }} className="text-6xl mb-4">🐰</div>
-            <h2 className="warren-section-header mb-2">No Burrows Found</h2>
-            <p className="warren-body-text mb-4" style={{ color: 'var(--warren-secondary-text)' }}>
-              Get started by digging your first conversational burrow with Warren.
+            <div className="mb-4"><FolderOpen className="w-16 h-16 mx-auto text-gray-400" /></div>
+            <h2 className="warren-section-header mb-2">No Surveys Found</h2>
+            <p className="text-gray-600 mb-4">
+              Get started by creating your first conversational survey.
             </p>
             <Link
               href="/builder"
-              className="warren-btn-primary"
+              className="warren-btn-primary flex items-center justify-center gap-2"
             >
-              🐰 Dig New Burrow
+              <Plus className="w-4 h-4" />
+              Create Survey
             </Link>
           </div>
         ) : (
@@ -107,9 +110,9 @@ const SurveyListPage = () => {
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <h3 className="warren-section-header text-lg mb-2">
-                      🐰 {survey.name}
+                      {survey.name}
                     </h3>
-                    <p className="warren-secondary-text text-sm mb-4">
+                    <p className="text-sm text-gray-600 mb-4">
                       Created: {new Date(survey.createdAt).toLocaleDateString()}
                     </p>
                     <div className="flex gap-2">
@@ -117,26 +120,27 @@ const SurveyListPage = () => {
                         href={`/survey/${survey.id}`}
                         className="warren-btn-primary text-sm"
                       >
-                        Enter Burrow
+                        View Survey
                       </Link>
                       <Link
                         href={`/builder?surveyId=${survey.id}`}
-                        className="warren-btn-secondary text-sm"
+                        className="warren-btn-success text-sm flex items-center gap-1"
                       >
-                        Edit Burrow
+                        <Edit className="w-3 h-3" />
+                        Edit
                       </Link>
                       <Link
                         href={`/style?surveyId=${survey.id}`}
-                        className="warren-btn-secondary text-sm"
-                        style={{ backgroundColor: 'var(--warren-secondary-green)', color: 'white' }}
+                        className="warren-btn-secondary text-sm flex items-center gap-1"
                       >
-                        Style Warren
+                        <Palette className="w-3 h-3" />
+                        Style
                       </Link>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="warren-secondary-text text-sm">
-                      Burrow ID: {survey.id}
+                    <div className="text-sm text-gray-600">
+                      Survey ID: {survey.id}
                     </div>
                   </div>
                 </div>

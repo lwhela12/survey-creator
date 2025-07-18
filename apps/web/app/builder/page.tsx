@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Flow from '../components/Flow';
 import SpreadsheetUpload from '../components/SpreadsheetUpload';
+import { BarChart3, Link2, Zap, FileText, Target, BookOpen, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
 
 const BuilderPage = () => {
   const [nodes, setNodes] = useState<any[]>([]);
@@ -129,10 +130,10 @@ const BuilderPage = () => {
 
       setNodes(newNodes);
       setEdges(newEdges);
-      showNotification('success', `🎉 Successfully created burrow with ${newNodes.length} nodes!`);
+      showNotification('success', `Successfully created survey with ${newNodes.length} nodes!`);
     } catch (error) {
       console.error('Error processing upload:', error);
-      showNotification('error', '❌ Failed to process your spreadsheet. Please check the format.');
+      showNotification('error', 'Failed to process your spreadsheet. Please check the format.');
     } finally {
       setIsLoading(false);
     }
@@ -163,13 +164,13 @@ const BuilderPage = () => {
       });
 
       if (response.ok) {
-        showNotification('success', '💾 Burrow saved successfully! Your survey is ready.');
+        showNotification('success', 'Survey saved successfully! Your survey is ready.');
       } else {
-        showNotification('error', '❌ Failed to save burrow. Please try again.');
+        showNotification('error', 'Failed to save survey. Please try again.');
       }
     } catch (error) {
       console.error('Error saving survey:', error);
-      showNotification('error', '❌ Network error. Please check your connection and try again.');
+      showNotification('error', 'Network error. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -216,13 +217,13 @@ const BuilderPage = () => {
 
         setNodes(newNodes);
         setEdges(newEdges);
-        showNotification('success', '📂 Burrow loaded successfully!');
+        showNotification('success', 'Survey loaded successfully!');
       } else {
-        showNotification('error', '❌ Failed to load burrow. Survey not found.');
+        showNotification('error', 'Failed to load survey. Survey not found.');
       }
     } catch (error) {
       console.error('Error loading survey:', error);
-      showNotification('error', '❌ Network error. Please check your connection and try again.');
+      showNotification('error', 'Network error. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -234,7 +235,7 @@ const BuilderPage = () => {
         id: '1',
         position: { x: 100, y: 50 },
         data: { 
-          label: 'Welcome to our course feedback survey! 🎓',
+          label: 'Welcome to our course feedback survey!',
           questionType: 'statement'
         },
         style: {
@@ -307,7 +308,7 @@ const BuilderPage = () => {
 
     setNodes(sampleNodes);
     setEdges(sampleEdges);
-    showNotification('success', '✨ Sample burrow created! Feel free to modify and customize.');
+    showNotification('success', 'Sample survey created! Feel free to modify and customize.');
   };
 
   return (
@@ -315,11 +316,14 @@ const BuilderPage = () => {
       <div className="container mx-auto">
         {/* Notification */}
         {notification && (
-          <div className={`mb-6 ${
+          <div className={`mb-6 flex items-center gap-2 ${
             notification.type === 'success' ? 'warren-success' : 
             notification.type === 'warning' ? 'warren-warning' : 
             'warren-error'
           }`}>
+            {notification.type === 'success' && <CheckCircle className="w-5 h-5" />}
+            {notification.type === 'warning' && <AlertCircle className="w-5 h-5" />}
+            {notification.type === 'error' && <XCircle className="w-5 h-5" />}
             {notification.message}
           </div>
         )}
@@ -328,7 +332,7 @@ const BuilderPage = () => {
         <div className="mb-12">
           <div className="text-center mb-8">
             <h1 className="warren-hero-title mb-4">Survey Builder</h1>
-            <p className="warren-body-text max-w-2xl mx-auto" style={{ color: 'var(--warren-secondary-text)' }}>
+            <p className="text-gray-600 max-w-2xl mx-auto">
               Create your conversational survey by uploading a spreadsheet or building from scratch.
             </p>
           </div>
@@ -336,19 +340,19 @@ const BuilderPage = () => {
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="warren-card text-center">
-              <div className="text-lg mb-2">📊</div>
-              <div className="warren-body-text font-semibold">{nodes.length}</div>
-              <div className="warren-secondary-text text-sm">Survey Nodes</div>
+              <div className="mb-2"><BarChart3 className="w-6 h-6 mx-auto text-blue-600" /></div>
+              <div className="text-2xl font-semibold text-gray-900">{nodes.length}</div>
+              <div className="text-sm text-gray-600">Survey Nodes</div>
             </div>
             <div className="warren-card text-center">
-              <div className="text-lg mb-2">🔗</div>
-              <div className="warren-body-text font-semibold">{edges.length}</div>
-              <div className="warren-secondary-text text-sm">Connections</div>
+              <div className="mb-2"><Link2 className="w-6 h-6 mx-auto text-green-600" /></div>
+              <div className="text-2xl font-semibold text-gray-900">{edges.length}</div>
+              <div className="text-sm text-gray-600">Connections</div>
             </div>
             <div className="warren-card text-center">
-              <div className="text-lg mb-2">⚡</div>
-              <div className="warren-body-text font-semibold">Live</div>
-              <div className="warren-secondary-text text-sm">Preview Ready</div>
+              <div className="mb-2"><Zap className="w-6 h-6 mx-auto text-purple-600" /></div>
+              <div className="text-2xl font-semibold text-gray-900">Live</div>
+              <div className="text-sm text-gray-600">Preview Ready</div>
             </div>
           </div>
         </div>
@@ -359,9 +363,9 @@ const BuilderPage = () => {
           
           {/* Or Divider */}
           <div className="flex items-center my-8">
-            <div className="flex-1 h-px" style={{ background: 'var(--warren-border)' }}></div>
-            <div className="px-4 warren-secondary-text font-medium">or</div>
-            <div className="flex-1 h-px" style={{ background: 'var(--warren-border)' }}></div>
+            <div className="flex-1 h-px bg-gray-200"></div>
+            <div className="px-4 text-gray-500 font-medium">or</div>
+            <div className="flex-1 h-px bg-gray-200"></div>
           </div>
           
           {/* Quick Actions */}
@@ -444,7 +448,7 @@ const BuilderPage = () => {
           <div className="mb-6 text-center">
             <h2 className="warren-section-header mb-2">Visual Survey Editor</h2>
             {nodes.length === 0 && (
-              <div className="warren-secondary-text text-sm">
+              <div className="text-sm text-gray-600">
                 Upload a spreadsheet or create a sample to get started
               </div>
             )}
@@ -453,18 +457,17 @@ const BuilderPage = () => {
           <div className="relative">
             {nodes.length === 0 ? (
               // Empty State
-              <div className="h-96 rounded-lg border-2 border-dashed flex items-center justify-center" style={{ borderColor: 'var(--warren-border)', background: 'var(--warren-gray-50)' }}>
+              <div className="h-96 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 flex items-center justify-center">
                 <div className="text-center max-w-md">
                   <div className="w-6 h-6 mx-auto mb-4">
                     <img 
                       src="/NesolagusLogo.png" 
                       alt="Nesolagus Logo" 
                       className="w-6 h-6 object-contain opacity-50"
-                      style={{ width: '24px', height: '24px' }}
                     />
                   </div>
                   <h3 className="warren-section-header text-lg mb-2">Ready to Build Your Survey?</h3>
-                  <p className="warren-secondary-text mb-6">
+                  <p className="text-gray-600 mb-6">
                     Upload your survey spreadsheet above or create a sample survey to see the visual editor in action.
                   </p>
                   <div className="flex flex-col gap-2">
@@ -479,16 +482,16 @@ const BuilderPage = () => {
               </div>
             ) : (
               // Flow Editor
-              <div style={{ height: '600px', border: '1px solid var(--warren-border)', borderRadius: 'var(--warren-radius-lg)' }}>
+              <div className="h-[600px] border border-gray-200 rounded-lg overflow-hidden">
                 <Flow initialNodes={nodes} initialEdges={edges} />
               </div>
             )}
           </div>
           
           {nodes.length > 0 && (
-            <div className="mt-6 p-4 rounded-lg border" style={{ background: 'var(--warren-gray-50)', borderColor: 'var(--warren-border)' }}>
-              <h4 className="warren-body-text font-semibold mb-2">Editor Tips:</h4>
-              <ul className="warren-secondary-text text-sm space-y-1">
+            <div className="mt-6 p-4 rounded-lg border border-gray-200 bg-gray-50">
+              <h4 className="font-semibold mb-2">Editor Tips:</h4>
+              <ul className="text-sm text-gray-600 space-y-1">
                 <li>• Drag nodes to rearrange your conversation flow</li>
                 <li>• Connect nodes by dragging from the edge handles</li>
                 <li>• Use the minimap and controls in the bottom right</li>
@@ -503,11 +506,11 @@ const BuilderPage = () => {
           <h2 className="warren-section-header mb-4">Need Help Getting Started?</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h4 className="warren-body-text font-semibold mb-2">📋 Spreadsheet Format</h4>
-              <p className="warren-secondary-text text-sm mb-4">
+              <h4 className="font-semibold mb-2 flex items-center gap-2"><FileText className="w-4 h-4" /> Spreadsheet Format</h4>
+              <p className="text-sm text-gray-600 mb-4">
                 Your spreadsheet should include these columns (various naming formats supported):
               </p>
-              <ul className="warren-secondary-text text-sm space-y-1">
+              <ul className="text-sm text-gray-600 space-y-1">
                 <li><strong>ID:</strong> Unique identifier (also accepts: Block #, id, item_id, question_id, step, etc.)</li>
                 <li><strong>Message_Text:</strong> The question text (also accepts: Question/Content, message, text, question, content)</li>
                 <li><strong>Question_Type:</strong> Question type (also accepts: Response Type, type, kind, format) - statement, text, number, single_choice, multi_choice</li>
@@ -515,11 +518,11 @@ const BuilderPage = () => {
               </ul>
             </div>
             <div>
-              <h4 className="warren-body-text font-semibold mb-2">🎯 Best Practices</h4>
-              <ul className="warren-secondary-text text-sm space-y-1">
+              <h4 className="font-semibold mb-2 flex items-center gap-2"><Target className="w-4 h-4" /> Best Practices</h4>
+              <ul className="text-sm text-gray-600 space-y-1">
                 <li>• Start with a friendly welcome message</li>
                 <li>• Keep questions clear and concise</li>
-                <li>• Use Warren's conversational tone</li>
+                <li>• Use a conversational tone</li>
                 <li>• Test your flow before sharing</li>
                 <li>• Consider branching for personalized paths</li>
               </ul>
@@ -527,8 +530,8 @@ const BuilderPage = () => {
           </div>
           
           <div className="mt-6 text-center">
-            <a href="/docs" className="warren-btn-secondary">
-              <span>📖</span>
+            <a href="/docs" className="warren-btn-secondary flex items-center justify-center gap-2">
+              <BookOpen className="w-4 h-4" />
               View Full Documentation
             </a>
           </div>
