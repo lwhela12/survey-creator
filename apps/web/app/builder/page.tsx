@@ -1,11 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Flow from '../components/Flow';
 import SpreadsheetUpload from '../components/SpreadsheetUpload';
 import { BarChart3, Link2, Zap, FileText, Target, BookOpen, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
 
 const BuilderPage = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const initId = searchParams.get('surveyId');
+  const [surveyId, setSurveyId] = useState<string | null>(initId);
   const [nodes, setNodes] = useState<any[]>([]);
   const [edges, setEdges] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -141,9 +146,23 @@ const BuilderPage = () => {
 
   const handleSave = async () => {
     setIsLoading(true);
-    const surveyId = 'mock-survey-id';
-    
     try {
+      let id = surveyId;
+      if (!id) {
+        const createRes = await fetch(`http://localhost:3001/api/surveys`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: 'Untitled Survey' }),
+        });
+        if (createRes.ok) {
+          const { id: newId } = await createRes.json();
+          id = newId;
+          setSurveyId(id);
+        } else {
+          showNotification('error', 'Failed to create survey.');
+          return;
+        }
+      }
       const surveyData = {
         nodes: nodes.reduce((acc, node) => {
           acc[node.id] = {
@@ -155,7 +174,7 @@ const BuilderPage = () => {
         }, {}),
       };
 
-      const response = await fetch(`http://localhost:3001/api/surveys/${surveyId}`, {
+      const response = await fetch(`http://localhost:3001/api/surveys/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -178,12 +197,15 @@ const BuilderPage = () => {
 
   const handleLoad = async () => {
     setIsLoading(true);
-    const surveyId = 'mock-survey-id';
-
     try {
+      if (!surveyId) {
+        showNotification('error', 'No survey ID to load.');
+        return;
+      }
       const response = await fetch(`http://localhost:3001/api/surveys/${surveyId}`);
       if (response.ok) {
         const surveyData = await response.json();
+        setSurveyId(surveyData.id);
         const newNodes = Object.entries(surveyData.nodes).map(([id, node]: [string, any], index: number) => ({
           id,
           position: { x: 100 + (index % 3) * 250, y: 50 + Math.floor(index / 3) * 150 },
@@ -311,6 +333,14 @@ const BuilderPage = () => {
     showNotification('success', 'Sample survey created! Feel free to modify and customize.');
   };
 
+  // Load survey when surveyId is set (from URL or after save) and sync URL
+  useEffect(() => {
+    if (!surveyId) return;
+    // reflect surveyId in query param without reloading
+    router.replace(`?surveyId=${surveyId}`, undefined, { shallow: true });
+    handleLoad();
+  }, [surveyId, router]);
+
   return (
     <div className="warren-main-content">
       <div className="container mx-auto">
@@ -422,18 +452,18 @@ const BuilderPage = () => {
             )}
           </button>
 
-          {nodes.length > 0 && (
-            <a 
-              href="/style" 
+          {nodes.length > 0 && surveyId && (
+            <a
+              href={`/style?surveyId=${surveyId}`}
               className="warren-btn-success"
             >
               Customize Style
             </a>
           )}
 
-          {nodes.length > 0 && (
-            <a 
-              href="/survey/mock-survey-id" 
+          {nodes.length > 0 && surveyId && (
+            <a
+              href={`/survey/${surveyId}`}
               className="warren-btn-secondary"
               target="_blank"
               rel="noopener noreferrer"

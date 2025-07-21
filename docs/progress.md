@@ -238,3 +238,10 @@ The turborepo has been setup.
     *   Improved CSS organization with clear sections
     *   Maintained backward compatibility with legacy classes
 *   The application now has a clean, modern, professional appearance following the design principles of leading SaaS platforms like Linear, Notion, and Stripe, with minimal visual noise and maximum usability.
+
+**July 19, 2025 - ChatGPT**
+
+*   Enhanced the Builder page to fully persist and reload surveys:
+    *  Survey ID now syncs to the URL query parameter on save, enabling deep links back to the same survey state.
+    *  Automatic load of saved survey data whenever a surveyId is present or updated, without needing manual load clicks.
+    *  Preview and style links now reliably point to the active survey the user is working on.
